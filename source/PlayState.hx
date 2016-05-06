@@ -49,9 +49,9 @@ class PlayState extends FlxState
   {
     // walls
     for( wall in Spawn.walls ){
-      // trace(wall);
-      // add(wall);
-      add( new FlxSprite(wall.x, wall.y, wall.graphic) );
+      var wall = new FlxSprite(wall.x, wall.y, wall.graphic);
+      wall.immovable = true;
+      add( wall );
     }
 
     // pickups
@@ -65,5 +65,7 @@ class PlayState extends FlxState
 	override public function update(elapsed:Float):Void
 	{
 		super.update(elapsed);
+
+    FlxG.collide();
 	}
 }
