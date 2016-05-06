@@ -23,12 +23,14 @@ class PlayState extends FlxState
   private var pickups:List<Pickup>;
   private var enemies:List<Enemy>;
   private var timer:FlxTimer;
+  private var survival_type:Bool;
 
 
 	override public function create():Void
 	{
     pickups = new List<Pickup>();
     enemies = new List<Enemy>();
+    survival_type = true;
 
 		super.create();
     map = new Map(this);
@@ -42,7 +44,13 @@ class PlayState extends FlxState
 
     timer = new FlxTimer();
     timer.start(Settings.time_limit, function(t){
-      FlxG.switchState(new EndState(player_1.points, player_2.points, EndState.EndType.TIME_OUT));
+      FlxG.switchState(new EndState(
+            player_1.points,
+            player_2.points,
+            survival_type ?
+              EndState.EndType.SURVIVED :
+              EndState.EndType.TIME_OUT
+            ));
     });
 
 #if neko
@@ -64,16 +72,17 @@ class PlayState extends FlxState
     for( pickup in Spawn.pickups ){
       var new_pickup:Pickup = switch(pickup.type){
 
-        case GEM: null;
+        case GEM:
+          survival_type = false;
           new sprites.pickups.Gem(pickup.x, pickup.y, pickup.graphic);
 
         case FREEZE:
           new sprites.pickups.Freeze(pickup.x, pickup.y, pickup.graphic);
 
-        case SLOW: null;
+        case SLOW:
           new sprites.pickups.Slow(pickup.x, pickup.y, pickup.graphic);
 
-        case SPEED: null;
+        case SPEED:
           new sprites.pickups.Speed(pickup.x, pickup.y, pickup.graphic);
 
       }
