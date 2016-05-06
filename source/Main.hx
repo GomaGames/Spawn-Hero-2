@@ -1,5 +1,6 @@
 package;
 
+import flixel.FlxG;
 import flixel.FlxGame;
 import openfl.display.Sprite;
 import flixel.util.FlxColor;
@@ -15,8 +16,11 @@ class Main extends Sprite
 	public function new()
 	{
 		super();
+    FlxG.stage.quality = openfl.display.StageQuality.BEST;
     //                                skip splash -------------------------------V
     // addChild(new FlxGame(STAGE_WIDTH, STAGE_HEIGHT, EndState, null, null, null, true));
 		addChild(new FlxGame(STAGE_WIDTH, STAGE_HEIGHT, TitleState, null, null, null, true));
-	}
+    FlxG.camera.antialiasing = true;
+
+  }
 }
