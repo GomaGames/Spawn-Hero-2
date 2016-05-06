@@ -13,5 +13,10 @@ class Map extends FlxSprite {
     super(0,0);
   }
   
-  
+  public static inline function drawGridLines( state:PlayState, map:FlxSprite ):Void
+  {
+    // DRAWING GRID LINES
+    for( x in 0...GRID_LINES_X ) state.add(FlxSpriteUtil.drawLine( map, ( x * GRID_SIZE ) + GRID_SIZE , 0, ( x * GRID_SIZE ) + GRID_SIZE, Main.STAGE_HEIGHT, { color: FlxColor.RED, thickness: 0.5 } ));
+    for( y in 0...GRID_LINES_Y ) state.add(FlxSpriteUtil.drawLine( map, 0, ( y * GRID_SIZE ) + GRID_SIZE , Main.STAGE_WIDTH, ( y * GRID_SIZE ) + GRID_SIZE , { color: FlxColor.RED, thickness: 0.5 } ));
+  }
 }
