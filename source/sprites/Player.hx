@@ -49,7 +49,6 @@ class Player extends FlxSprite {
     this.speed = base_speed;
     this.drag = FlxPoint.weak(this.speed*10, this.speed*10);
     this.points = 0;
-
   }
 
   override public function update(elapsed:Float):Void
