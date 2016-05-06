@@ -55,15 +55,15 @@ class PlayState extends FlxState
     });
 
     p1score = new FlxText( Main.STAGE_WIDTH - 2 * ( Main.STAGE_WIDTH / Map.GRID_LINES_X ) , 10, '0');
-    p1score.setFormat( AssetPaths.CHUNKY_FONT, 18, Main.FONT_BLUE, FlxTextAlign.LEFT, FlxTextBorderStyle.SHADOW, FlxColor.BLACK, true);
+    p1score.setFormat( "Arial", 18, Main.FONT_BLUE, FlxTextAlign.LEFT, FlxTextBorderStyle.SHADOW, FlxColor.BLACK, true);
     add(p1score);
 
     p2score = new FlxText( 4 * ( Main.STAGE_WIDTH / Map.GRID_LINES_X ) , 10, '0');
-    p2score.setFormat( AssetPaths.CHUNKY_FONT, 18, Main.FONT_RED, FlxTextAlign.LEFT, FlxTextBorderStyle.SHADOW, FlxColor.BLACK, true);
+    p2score.setFormat( "Arial", 18, Main.FONT_RED, FlxTextAlign.LEFT, FlxTextBorderStyle.SHADOW, FlxColor.BLACK, true);
     add(p2score);
 
     timer_text = new FlxText( Main.STAGE_WIDTH / 2 , 10, Std.string(Std.int( timer.time )));
-    timer_text.setFormat( AssetPaths.CHUNKY_FONT, 18, Main.FONT_GREY, FlxTextAlign.LEFT, FlxTextBorderStyle.SHADOW, FlxColor.BLACK, true);
+    timer_text.setFormat( "Arial", 18, Main.FONT_GREY, FlxTextAlign.LEFT, FlxTextBorderStyle.SHADOW, FlxColor.BLACK, true);
     add(timer_text);
 
 #if neko

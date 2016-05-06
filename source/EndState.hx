@@ -51,12 +51,12 @@ class EndState extends FlxState
     bgColor = Main.BACKGROUND_GREY;
 
     var headerText = new FlxText( ( Main.STAGE_WIDTH / 8 ), ( Main.STAGE_HEIGHT / 10 ), 'GAME OVER' );
-    headerText.setFormat( AssetPaths.CHUNKY_FONT, 42, Main.FONT_GREY, FlxTextAlign.CENTER, FlxTextBorderStyle.SHADOW, FlxColor.BLACK, true);
+    headerText.setFormat( "Arial", 42, Main.FONT_GREY, FlxTextAlign.CENTER, FlxTextBorderStyle.SHADOW, FlxColor.BLACK, true);
     headerText.screenCenter( FlxAxes.X );
     add( headerText );
 
     var winnerText = new FlxText( Main.STAGE_WIDTH / 2, Main.STAGE_HEIGHT * (20/100), resolveWinner( this.p1Score, this.p2Score ));
-    winnerText.setFormat( AssetPaths.CHUNKY_FONT, 72, Main.FONT_RED, FlxTextAlign.CENTER, FlxTextBorderStyle.SHADOW, FlxColor.BLACK, true);
+    winnerText.setFormat( "Arial", 72, Main.FONT_RED, FlxTextAlign.CENTER, FlxTextBorderStyle.SHADOW, FlxColor.BLACK, true);
     winnerText.screenCenter( FlxAxes.X );
     add( winnerText );
 
@@ -65,23 +65,23 @@ class EndState extends FlxState
     var playerTextY = (40/100) * Main.STAGE_HEIGHT;
 
     var player1Text = new FlxText( player1TextX, playerTextY, "Hero 1" );
-    player1Text.setFormat( AssetPaths.CHUNKY_FONT, 52, Main.FONT_GREY, FlxTextAlign.CENTER, FlxTextBorderStyle.SHADOW, FlxColor.BLACK, true);
+    player1Text.setFormat( "Arial", 52, Main.FONT_GREY, FlxTextAlign.CENTER, FlxTextBorderStyle.SHADOW, FlxColor.BLACK, true);
     add( player1Text );
 
     var player2Text = new FlxText( player2TextX, playerTextY, "Hero 2" );
-    player2Text.setFormat( AssetPaths.CHUNKY_FONT, 52, Main.FONT_GREY, FlxTextAlign.CENTER, FlxTextBorderStyle.SHADOW, FlxColor.BLACK, true);
+    player2Text.setFormat( "Arial", 52, Main.FONT_GREY, FlxTextAlign.CENTER, FlxTextBorderStyle.SHADOW, FlxColor.BLACK, true);
     add( player2Text );
 
     var player1Score = new FlxText( player1TextX + 50, playerTextY + (playerTextY/4), Std.string( this.p1Score ) );
-    player1Score.setFormat( AssetPaths.CHUNKY_FONT, 90, Main.FONT_BLUE, FlxTextAlign.CENTER, FlxTextBorderStyle.SHADOW, FlxColor.BLACK, true);
+    player1Score.setFormat( "Arial", 90, Main.FONT_BLUE, FlxTextAlign.CENTER, FlxTextBorderStyle.SHADOW, FlxColor.BLACK, true);
     add( player1Score );
 
     var player2Score = new FlxText( player2TextX + 50, playerTextY + (playerTextY/4), Std.string( this.p2Score ) );
-    player2Score.setFormat( AssetPaths.CHUNKY_FONT, 88, Main.FONT_RED, FlxTextAlign.CENTER, FlxTextBorderStyle.SHADOW, FlxColor.BLACK, true);
+    player2Score.setFormat( "Arial", 88, Main.FONT_RED, FlxTextAlign.CENTER, FlxTextBorderStyle.SHADOW, FlxColor.BLACK, true);
     add( player2Score );
 
     var playAgain = new FlxText( 3*(Main.STAGE_WIDTH/5), Main.STAGE_HEIGHT * (3/4), "PLAY AGAIN?" );
-    playAgain.setFormat( AssetPaths.CHUNKY_FONT, 60, Main.FONT_YELLOW, FlxTextAlign.CENTER, FlxTextBorderStyle.SHADOW, FlxColor.BLACK, true);
+    playAgain.setFormat( "Arial", 60, Main.FONT_YELLOW, FlxTextAlign.CENTER, FlxTextBorderStyle.SHADOW, FlxColor.BLACK, true);
     playAgain.screenCenter( FlxAxes.X );
     add( playAgain );
 

@@ -205,7 +205,7 @@ ApplicationMain.init = function() {
 	if(total == 0) ApplicationMain.start();
 };
 ApplicationMain.main = function() {
-	ApplicationMain.config = { build : "231", company : "GomaGames", file : "SpawnHero2", fps : 60, name : "SpawnHero2", orientation : "", packageName : "com.example.myapp", version : "0.0.1", windows : [{ antialiasing : 0, background : 16777215, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 680, parameters : "{}", resizable : false, stencilBuffer : true, title : "SpawnHero2", vsync : true, width : 920, x : null, y : null}]};
+	ApplicationMain.config = { build : "259", company : "GomaGames", file : "SpawnHero2", fps : 60, name : "SpawnHero2", orientation : "", packageName : "com.example.myapp", version : "0.0.1", windows : [{ antialiasing : 0, background : 16777215, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 680, parameters : "{}", resizable : false, stencilBuffer : true, title : "SpawnHero2", vsync : true, width : 920, x : null, y : null}]};
 };
 ApplicationMain.start = function() {
 	var hasMain = false;
@@ -4892,14 +4892,17 @@ _$_$ASSET_$_$OPENFL_$_$flixel_$fonts_$monsterrat_$ttf.__super__ = openfl_text_Fo
 _$_$ASSET_$_$OPENFL_$_$flixel_$fonts_$monsterrat_$ttf.prototype = $extend(openfl_text_Font.prototype,{
 	__class__: _$_$ASSET_$_$OPENFL_$_$flixel_$fonts_$monsterrat_$ttf
 });
-var EndType = $hxClasses["EndType"] = { __ename__ : ["EndType"], __constructs__ : ["TIME_OUT","SURVIVED","FINISH"] };
+var EndType = $hxClasses["EndType"] = { __ename__ : ["EndType"], __constructs__ : ["TIME_OUT","SURVIVED","NO_SURVIVORS","FINISH"] };
 EndType.TIME_OUT = ["TIME_OUT",0];
 EndType.TIME_OUT.toString = $estr;
 EndType.TIME_OUT.__enum__ = EndType;
 EndType.SURVIVED = ["SURVIVED",1];
 EndType.SURVIVED.toString = $estr;
 EndType.SURVIVED.__enum__ = EndType;
-EndType.FINISH = ["FINISH",2];
+EndType.NO_SURVIVORS = ["NO_SURVIVORS",2];
+EndType.NO_SURVIVORS.toString = $estr;
+EndType.NO_SURVIVORS.__enum__ = EndType;
+EndType.FINISH = ["FINISH",3];
 EndType.FINISH.toString = $estr;
 EndType.FINISH.__enum__ = EndType;
 var flixel_util_IFlxDestroyable = function() { };
@@ -5378,34 +5381,36 @@ flixel_FlxState.prototype = $extend(flixel_group_FlxTypedGroup.prototype,{
 	,__class__: flixel_FlxState
 	,__properties__: $extend(flixel_group_FlxTypedGroup.prototype.__properties__,{set_bgColor:"set_bgColor",get_bgColor:"get_bgColor"})
 });
-var EndState = function(player_1_score,player_2_score,end_type) {
+var EndState = function(player_1,player_2,end_type) {
 	flixel_FlxState.call(this);
-	this.p1Score = player_1_score;
-	this.p2Score = player_2_score;
+	this.p1Score = player_1.points;
+	this.p2Score = player_2.points;
 	this.end_type = end_type;
 };
 $hxClasses["EndState"] = EndState;
 EndState.__name__ = ["EndState"];
 EndState.__super__ = flixel_FlxState;
 EndState.prototype = $extend(flixel_FlxState.prototype,{
-	resolveWinner: function(p1Score,p2Score,end_type) {
+	resolveWinner: function(p1Score,p2Score) {
 		if(p1Score == p2Score) return "It's a tie!";
 		var winner;
 		if(p1Score > p2Score) winner = 1; else winner = 2;
 		var text;
-		if(end_type != null) switch(end_type[1]) {
+		var _g = this.end_type;
+		switch(_g[1]) {
 		case 0:
 			text = "Hero " + winner + " Wins!";
 			break;
 		case 1:
-			text = "Hero " + winner + " Survived!";
+			text = "Hero Survived!";
 			break;
 		case 2:
+			text = "Nobody survived!";
+			break;
+		case 3:
 			text = "Hero " + winner + " Wins!";
 			break;
-		default:
-			text = "Hero " + winner + " Wins!";
-		} else text = "Hero " + winner + " Wins!";
+		}
 		return text;
 	}
 	,create: function() {
@@ -5415,7 +5420,7 @@ EndState.prototype = $extend(flixel_FlxState.prototype,{
 		headerText.setFormat("assets/fonts/Chunkfive-webfont.ttf",42,Main.FONT_GREY,"center",flixel_text_FlxTextBorderStyle.SHADOW,-16777216,true);
 		headerText.screenCenter(flixel_util_FlxAxes.X);
 		this.add(headerText);
-		var winnerText = new flixel_text_FlxText(460.,136.,null,this.resolveWinner(this.p1Score,this.p2Score,this.end_type));
+		var winnerText = new flixel_text_FlxText(460.,136.,null,this.resolveWinner(this.p1Score,this.p2Score));
 		winnerText.setFormat("assets/fonts/Chunkfive-webfont.ttf",72,Main.FONT_RED,"center",flixel_text_FlxTextBorderStyle.SHADOW,-16777216,true);
 		winnerText.screenCenter(flixel_util_FlxAxes.X);
 		this.add(winnerText);
@@ -5606,10 +5611,8 @@ NMEPreloader.prototype = $extend(openfl_display_Sprite.prototype,{
 	}
 	,__class__: NMEPreloader
 });
-var PlayState = function() {
-	flixel_FlxState.call(this);
-	this.player_1 = null;
-	this.player_2 = null;
+var PlayState = function(MaxSize) {
+	flixel_FlxState.call(this,MaxSize);
 };
 $hxClasses["PlayState"] = PlayState;
 PlayState.__name__ = ["PlayState"];
@@ -5630,16 +5633,16 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 		this.add(flixel_util_FlxCollision.createCameraWall(flixel_FlxG.camera,true,1));
 		this.timer = new flixel_util_FlxTimer();
 		this.timer.start(Settings.time_limit,function(t) {
-			flixel_FlxG.switchState(new EndState(_g.player_1.points,_g.player_2.points,_g.survival_type?EndType.SURVIVED:EndType.TIME_OUT));
+			flixel_FlxG.switchState(new EndState(_g.player_1,_g.player_2,_g.survival_type?EndType.SURVIVED:EndType.TIME_OUT));
 		});
 		this.p1score = new flixel_text_FlxText(840.,10,null,"0");
-		this.p1score.setFormat("assets/fonts/Chunkfive-webfont.ttf",18,Main.FONT_BLUE,"left",flixel_text_FlxTextBorderStyle.SHADOW,-16777216,true);
+		this.p1score.setFormat("Arial",18,Main.FONT_BLUE,"left",flixel_text_FlxTextBorderStyle.SHADOW,-16777216,true);
 		this.add(this.p1score);
 		this.p2score = new flixel_text_FlxText(160.,10,null,"0");
-		this.p2score.setFormat("assets/fonts/Chunkfive-webfont.ttf",18,Main.FONT_RED,"left",flixel_text_FlxTextBorderStyle.SHADOW,-16777216,true);
+		this.p2score.setFormat("Arial",18,Main.FONT_RED,"left",flixel_text_FlxTextBorderStyle.SHADOW,-16777216,true);
 		this.add(this.p2score);
 		this.timer_text = new flixel_text_FlxText(460.,10,null,Std.string(this.timer.time | 0));
-		this.timer_text.setFormat("assets/fonts/Chunkfive-webfont.ttf",18,Main.FONT_GREY,"left",flixel_text_FlxTextBorderStyle.SHADOW,-16777216,true);
+		this.timer_text.setFormat("Arial",18,Main.FONT_GREY,"left",flixel_text_FlxTextBorderStyle.SHADOW,-16777216,true);
 		this.add(this.timer_text);
 		this.spawnAll();
 	}
@@ -5775,17 +5778,28 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 				var hero = _g1[_g];
 				++_g;
 				if(flixel_FlxG.overlap(hero,enemy,null,flixel_FlxObject.separate)) {
-					hero.set_x(hero.spawn_position.x);
-					hero.set_y(hero.spawn_position.y);
-					hero.velocity.set(0,0);
+					if(hero.state.survival_type) {
+						hero.set_alive(false);
+						hero.destroy();
+					} else {
+						hero.set_x(hero.spawn_position.x);
+						hero.set_y(hero.spawn_position.y);
+						hero.velocity.set(0,0);
+					}
+					this.survival_check();
 				}
 			}
 		}
 	}
+	,survival_check: function() {
+		if(Lambda.filter([this.player_1,this.player_2],function(p) {
+			return p.alive;
+		}).length == 0) flixel_FlxG.switchState(new EndState(this.player_1,this.player_2,EndType.NO_SURVIVORS));
+	}
 	,victory_check: function() {
 		if(Lambda.filter(this.pickups,function(p) {
 			return (p == null?null:js_Boot.getClass(p)) == sprites_pickups_Gem;
-		}).length == 0) flixel_FlxG.switchState(new EndState(this.player_1.points,this.player_2.points,EndType.FINISH));
+		}).length == 0) flixel_FlxG.switchState(new EndState(this.player_1,this.player_2,EndType.FINISH));
 	}
 	,destroy: function() {
 		this.map = null;
@@ -5794,6 +5808,7 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 		this.spawn_engine = null;
 		this.pickups = null;
 		this.enemies = null;
+		this.timer.cancel();
 		this.timer = null;
 		this.survival_type = null;
 		this.timer_text = null;
@@ -5803,8 +5818,10 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 	}
 	,update: function(elapsed) {
 		this.timer_text.set_text(Std.string(Std["int"](this.timer.get_timeLeft())));
-		this.p1score.set_text(Std.string(this.player_1.points));
-		this.p2score.set_text(Std.string(this.player_2.points));
+		if(this.player_1 != null && this.player_2 != null) {
+			this.p1score.set_text(Std.string(this.player_1.points));
+			this.p2score.set_text(Std.string(this.player_2.points));
+		}
 		flixel_FlxState.prototype.update.call(this,elapsed);
 		this.pickup_collision();
 		this.touch_enemy();
@@ -5904,28 +5921,28 @@ Spawn.hero_1_setting = null;
 Spawn.hero_2_setting = null;
 Spawn.state = null;
 Spawn.hero_1 = function(x,y) {
-	Spawn.hero_1_setting = { x : x, y : y};
+	Spawn.hero_1_setting = { x : x, y : y + 40};
 };
 Spawn.hero_2 = function(x,y) {
-	Spawn.hero_2_setting = { x : x, y : y};
+	Spawn.hero_2_setting = { x : x, y : y + 40};
 };
 Spawn.wall = function(x,y,skin) {
-	Spawn.walls.add({ x : x, y : y, skin : skin != null?skin:Settings.wall.default_skin});
+	Spawn.walls.add({ x : x, y : y + 40, skin : skin != null?skin:Settings.wall.default_skin});
 };
 Spawn.freeze = function(x,y,duration,skin) {
-	Spawn.pickups.add({ type : PickupType.FREEZE, x : x, y : y, skin : skin != null?skin:Settings.freeze.default_skin, duration : duration != null?duration:Settings.freeze.default_duration});
+	Spawn.pickups.add({ type : PickupType.FREEZE, x : x, y : y + 40, skin : skin != null?skin:Settings.freeze.default_skin, duration : duration != null?duration:Settings.freeze.default_duration});
 };
 Spawn.speed = function(x,y,duration,skin) {
-	Spawn.pickups.add({ type : PickupType.SPEED, x : x, y : y, skin : skin != null?skin:Settings.speed.default_skin, duration : duration != null?duration:Settings.speed.default_duration});
+	Spawn.pickups.add({ type : PickupType.SPEED, x : x, y : y + 40, skin : skin != null?skin:Settings.speed.default_skin, duration : duration != null?duration:Settings.speed.default_duration});
 };
 Spawn.slow = function(x,y,duration,skin) {
-	Spawn.pickups.add({ type : PickupType.SLOW, x : x, y : y, skin : skin != null?skin:Settings.slow.default_skin, duration : duration != null?duration:Settings.slow.default_duration});
+	Spawn.pickups.add({ type : PickupType.SLOW, x : x, y : y + 40, skin : skin != null?skin:Settings.slow.default_skin, duration : duration != null?duration:Settings.slow.default_duration});
 };
 Spawn.gem = function(x,y,points,skin) {
-	Spawn.pickups.add({ type : PickupType.GEM, x : x, y : y, skin : skin != null?skin:Settings.gem.default_skin, points : points != null?points:Settings.gem.default_points});
+	Spawn.pickups.add({ type : PickupType.GEM, x : x, y : y + 40, skin : skin != null?skin:Settings.gem.default_skin, points : points != null?points:Settings.gem.default_points});
 };
 Spawn.enemy = function(x,y,direction,speed,skin) {
-	Spawn.enemies.add({ direction : direction, x : x, y : y, skin : skin != null?skin:Settings.enemy.default_skin, speed : speed != null?speed:Settings.enemy.default_speed});
+	Spawn.enemies.add({ direction : direction, x : x, y : y + 40, skin : skin != null?skin:Settings.enemy.default_skin, speed : speed != null?speed:Settings.enemy.default_speed});
 };
 var StringBuf = function() {
 	this.b = "";
@@ -59744,6 +59761,7 @@ sprites_Enemy.__name__ = ["sprites","Enemy"];
 sprites_Enemy.__super__ = flixel_FlxSprite;
 sprites_Enemy.prototype = $extend(flixel_FlxSprite.prototype,{
 	update: function(_) {
+		this.set_flipX(this.velocity.x > 0);
 		flixel_FlxSprite.prototype.update.call(this,_);
 	}
 	,__class__: sprites_Enemy
@@ -59798,6 +59816,9 @@ var sprites_Player = function(state,player_num,x,y) {
 	this.speed = this.settings.speed;
 	this.drag = flixel_math_FlxPoint.weak(this.speed * 10,this.speed * 10);
 	this.points = 0;
+	this.walkRot = 0;
+	this.walkHopY = 0;
+	this.state = state;
 };
 $hxClasses["sprites.Player"] = sprites_Player;
 sprites_Player.__name__ = ["sprites","Player"];
@@ -59828,7 +59849,12 @@ sprites_Player.prototype = $extend(flixel_FlxSprite.prototype,{
 				moving_h = true;
 			}
 		}
-		if(!moving_h) this.acceleration.set_x(0);
+		if(moving_h || moving_v) {
+			this.set_angle(Math.cos(++this.walkRot) * 10);
+			var _g = this;
+			_g.set_y(_g.y + Math.sin(--this.walkHopY) * 3);
+		} else this.set_angle(0);
+		if(!moving_h) this.acceleration.set_x(0); else this.set_flipX(this.acceleration.x > 0);
 		if(!moving_v) this.acceleration.set_y(0);
 		if(moving_h && moving_v) this.maxVelocity = flixel_math_FlxPoint.weak(this.speed / 1.41421356237,this.speed / 1.41421356237); else this.maxVelocity = flixel_math_FlxPoint.weak(this.speed,this.speed);
 	}
@@ -59859,9 +59885,14 @@ sprites_Player.prototype = $extend(flixel_FlxSprite.prototype,{
 		this.points += points;
 	}
 	,die: function() {
-		this.set_x(this.spawn_position.x);
-		this.set_y(this.spawn_position.y);
-		this.velocity.set(0,0);
+		if(this.state.survival_type) {
+			this.set_alive(false);
+			this.destroy();
+		} else {
+			this.set_x(this.spawn_position.x);
+			this.set_y(this.spawn_position.y);
+			this.velocity.set(0,0);
+		}
 	}
 	,__class__: sprites_Player
 });
@@ -60129,6 +60160,7 @@ Settings.freeze = { default_skin : "assets/images/44.png", default_duration : 2}
 Settings.speed = { default_skin : "assets/images/19.png", default_duration : 2};
 Settings.slow = { default_skin : "assets/images/21.png", default_duration : 2};
 Spawn.DEFAULT_WALL_SKIN = "assets/images/17.png";
+Spawn.TOPBAR_Y_OFFSET = 40;
 Spawn.pickups = new List();
 Spawn.walls = new List();
 Spawn.enemies = new List();
@@ -62214,32 +62246,32 @@ sprites_Map.LINES_GREY = flixel_util__$FlxColor_FlxColor_$Impl_$.fromString("#6d
 sprites_PlayerInput.up = (function($this) {
 	var $r;
 	var _g = new haxe_ds_IntMap();
-	_g.h[1] = 38;
-	_g.h[2] = 87;
+	_g.h[2] = 38;
+	_g.h[1] = 87;
 	$r = _g;
 	return $r;
 }(this));
 sprites_PlayerInput.down = (function($this) {
 	var $r;
 	var _g = new haxe_ds_IntMap();
-	_g.h[1] = 40;
-	_g.h[2] = 83;
+	_g.h[2] = 40;
+	_g.h[1] = 83;
 	$r = _g;
 	return $r;
 }(this));
 sprites_PlayerInput.left = (function($this) {
 	var $r;
 	var _g = new haxe_ds_IntMap();
-	_g.h[1] = 37;
-	_g.h[2] = 65;
+	_g.h[2] = 37;
+	_g.h[1] = 65;
 	$r = _g;
 	return $r;
 }(this));
 sprites_PlayerInput.right = (function($this) {
 	var $r;
 	var _g = new haxe_ds_IntMap();
-	_g.h[1] = 39;
-	_g.h[2] = 68;
+	_g.h[2] = 39;
+	_g.h[1] = 68;
 	$r = _g;
 	return $r;
 }(this));
