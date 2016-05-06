@@ -52,6 +52,10 @@ class Player extends FlxSprite {
 
     this.scale.set(.5,.5);
     this.updateHitbox();
+    this.height /= 4;
+    this.width /= 4;
+    this.centerOffsets();
+    this.centerOrigin();
 
     this.spawn_position = FlxPoint.weak(x, y);
     this.player_num = player_num;
