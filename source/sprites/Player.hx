@@ -100,6 +100,14 @@ class Player extends FlxSprite {
 
   }
 
+  public inline function speed_boost(duration:Float):Void
+  {
+    this.speed = base_speed * 2;
+    new FlxTimer().start(duration, function(timer){
+      this.speed = base_speed;
+    });
+  }
+
   public inline function freeze(duration:Float):Void
   {
     this.velocity.set(0,0);

@@ -66,6 +66,7 @@ class PlayState extends FlxState
         case SLOW: null;
 
         case SPEED: null;
+          new sprites.pickups.Speed(pickup.x, pickup.y, pickup.graphic);
 
       }
 
@@ -87,6 +88,8 @@ class PlayState extends FlxState
           remove(pickup);
           pickups.remove(pickup);
           switch(Type.getClass(pickup)){
+            case sprites.pickups.Speed:
+              hero.speed_boost(pickup.DURATION);
             case sprites.pickups.Freeze:
               hero.freeze(pickup.DURATION);
             case sprites.pickups.Gem:
