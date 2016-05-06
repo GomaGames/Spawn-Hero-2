@@ -28,12 +28,6 @@ class PlayState extends FlxState
   private var p1score:FlxText;
   private var p2score:FlxText;
 
-  public function new(){
-    super();
-    player_1 = null;
-    player_2 = null;
-  }
-
 	override public function create():Void
 	{
     pickups = new List<Pickup>();
