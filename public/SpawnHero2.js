@@ -205,7 +205,7 @@ ApplicationMain.init = function() {
 	if(total == 0) ApplicationMain.start();
 };
 ApplicationMain.main = function() {
-	ApplicationMain.config = { build : "227", company : "GomaGames", file : "SpawnHero2", fps : 60, name : "SpawnHero2", orientation : "", packageName : "com.example.myapp", version : "0.0.1", windows : [{ antialiasing : 0, background : 16777215, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 680, parameters : "{}", resizable : false, stencilBuffer : true, title : "SpawnHero2", vsync : true, width : 920, x : null, y : null}]};
+	ApplicationMain.config = { build : "229", company : "GomaGames", file : "SpawnHero2", fps : 60, name : "SpawnHero2", orientation : "", packageName : "com.example.myapp", version : "0.0.1", windows : [{ antialiasing : 0, background : 16777215, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 680, parameters : "{}", resizable : false, stencilBuffer : true, title : "SpawnHero2", vsync : true, width : 920, x : null, y : null}]};
 };
 ApplicationMain.start = function() {
 	var hasMain = false;
