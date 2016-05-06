@@ -8,6 +8,7 @@ import flixel.ui.FlxButton;
 import flixel.math.FlxMath;
 import flixel.util.FlxSpriteUtil;
 import flixel.util.FlxColor;
+import flixel.util.FlxTimer;
 import sprites.Map;
 import sprites.Player;
 import sprites.Enemy;
@@ -21,6 +22,7 @@ class PlayState extends FlxState
   private var spawn_engine:Spawn;
   private var pickups:List<Pickup>;
   private var enemies:List<Enemy>;
+  private var timer:FlxTimer;
 
 
 	override public function create():Void
@@ -38,6 +40,11 @@ class PlayState extends FlxState
     add(map);
     add(flixel.util.FlxCollision.createCameraWall(FlxG.camera, true, 1));
 
+    timer = new FlxTimer();
+    timer.start(Settings.time_limit, function(t){
+      // switchTo(new EndState(player_1.points, player_2.points, EndType.TIME_OUT));
+      trace("Game Over");
+    });
 
 #if neko
     Spawn.dev();
