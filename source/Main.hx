@@ -8,6 +8,7 @@ class Main extends Sprite
 	public function new()
 	{
 		super();
-		addChild(new FlxGame(640, 480, PlayState));
+    //                                skip splash --------------V
+		addChild(new FlxGame(640, 480, PlayState, null, null, null, true));
 	}
 }
