@@ -30,8 +30,8 @@ class PlayerInput {
 class Player extends FlxSprite {
 
   private static inline var DIAGONAL_MOVEMENT = 1.41421356237;  // divide by sqrt(2)
-  private static inline var default_graphic = "assets/images/graphic-07.png";
-  private static inline var base_speed = 200;
+  public static inline var default_graphic = "assets/images/graphic-07.png";
+  public static inline var default_speed = 200;
 
   public var points:Int;
 
@@ -40,13 +40,15 @@ class Player extends FlxSprite {
   private var attacking:Bool;
   private var speed:Int;
   private var spawn_position:FlxPoint;
+  private var settings:{ skin:String, speed:Int };
 
   public function new(state:PlayState, player_num:Int, x:Int, y:Int) {
-    super(x, y, default_graphic);
+    settings = player_num == 1 ? Settings.hero_1 : Settings.hero_2;
+    super(x, y, settings.skin);
 
     this.spawn_position = FlxPoint.weak(x, y);
     this.player_num = player_num;
-    this.speed = base_speed;
+    this.speed = settings.speed;
     this.drag = FlxPoint.weak(this.speed*10, this.speed*10);
     this.points = 0;
   }
@@ -103,17 +105,17 @@ class Player extends FlxSprite {
 
   public inline function speed_boost(duration:Float):Void
   {
-    this.speed = base_speed * 2;
+    this.speed = settings.speed * 2;
     new FlxTimer().start(duration, function(timer){
-      this.speed = base_speed;
+      this.speed = settings.speed;
     });
   }
 
   public inline function slow_down(duration:Float):Void
   {
-    this.speed = Std.int(base_speed / 2);
+    this.speed = Std.int(settings.speed / 2);
     new FlxTimer().start(duration, function(timer){
-      this.speed = base_speed;
+      this.speed = settings.speed;
     });
   }
 
@@ -123,7 +125,7 @@ class Player extends FlxSprite {
     this.acceleration.set(0,0);
     this.speed = 0;
     new FlxTimer().start(duration, function(timer){
-      this.speed = base_speed;
+      this.speed = settings.speed;
     });
   }
 
