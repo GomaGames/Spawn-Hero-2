@@ -84,6 +84,8 @@ class PlayState extends FlxState
     for( wall in Spawn.walls ){
       var wall = new FlxSprite(wall.x, wall.y, wall.skin);
       wall.immovable = true;
+      wall.scale.set(.5,.5);
+      wall.updateHitbox();
       add( wall );
     }
 

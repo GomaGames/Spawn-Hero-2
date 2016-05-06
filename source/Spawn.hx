@@ -38,7 +38,7 @@ typedef Enemy = {
 
 @:expose class Spawn {
 
-  public static inline var DEFAULT_WALL_SKIN = "assets/images/game_wall.png";
+  public static inline var DEFAULT_WALL_SKIN = "assets/images/17.png";
 
   public static var hero_1_setting:HeroSetting;
   public static var hero_2_setting:HeroSetting;

@@ -5,8 +5,8 @@ using flixel.util.FlxSpriteUtil;
 
 class Enemy extends FlxSprite {
 
-  public static inline var default_skin = "assets/images/graphic-27.png";
-  public static inline var default_speed = 100;
+  public static inline var DEFAULT_SKIN = "assets/images/12.png";
+  public static inline var DEFAULT_SPEED = 100;
   public static inline var UP = "up";
   public static inline var DOWN = "down";
   public static inline var LEFT = "left";
@@ -16,6 +16,8 @@ class Enemy extends FlxSprite {
   public function new(x:Int, y:Int, speed:Int, skin:String, ?direction:String ){
     this.speed = speed;
     super(x, y, skin);
+    this.scale.set(.5,.5);
+    this.updateHitbox();
     this.elasticity = 1;
     if(direction != null){
       switch(direction){
