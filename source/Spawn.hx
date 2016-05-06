@@ -30,7 +30,8 @@ typedef Enemy = {
   x : Int,
   y : Int,
   direction : String,
-  graphic : String
+  skin : String,
+  speed : Int
 }
 
 @:expose class Spawn {
@@ -40,7 +41,6 @@ typedef Enemy = {
   private static inline var SPEED_GRAPHIC = "assets/images/game_good.png";
   private static inline var SLOW_GRAPHIC = "assets/images/graphic-45.png";
   private static inline var GEM_GRAPHIC = "assets/images/graphic-57.png";
-  private static inline var ENEMY_GRAPHIC = "assets/images/graphic-27.png";
 
   public static var hero_1_setting:HeroSetting;
   public static var hero_2_setting:HeroSetting;
@@ -84,9 +84,15 @@ typedef Enemy = {
     pickups.add( { type: GEM, x : x, y : y, graphic : GEM_GRAPHIC } );
   }
 
-  public static inline function enemy(x:Int, y:Int, ?direction:String):Void
+  public static inline function enemy(x:Int, y:Int, ?direction:String, ?speed:Int, ?skin:String):Void
   {
-    enemies.add( { direction: direction, x : x, y : y, graphic : ENEMY_GRAPHIC } );
+    enemies.add({
+      direction: direction,
+      x : x,
+      y : y,
+      skin : skin != null ? skin : Settings.enemy.default_skin,
+      speed : speed != null ? speed : Settings.enemy.default_speed
+    });
   }
 
 #if neko

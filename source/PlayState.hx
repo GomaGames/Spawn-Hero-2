@@ -93,7 +93,7 @@ class PlayState extends FlxState
 
     // enemies
     for( enemy in Spawn.enemies ){
-      var new_enemy = new Enemy(enemy.x, enemy.y, enemy.graphic, enemy.direction);
+      var new_enemy = new Enemy(enemy.x, enemy.y, enemy.speed, enemy.skin, enemy.direction);
       enemies.add(new_enemy);
       add(new_enemy);
     }

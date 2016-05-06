@@ -1,6 +1,7 @@
 package;
 
 import sprites.Player;
+import sprites.Enemy;
 
 @:expose class Settings {
 
@@ -13,5 +14,10 @@ import sprites.Player;
     skin : Player.default_graphic,
     speed : Player.default_speed
   };
+
+  public static var enemy = {
+    default_skin : Enemy.default_skin,
+    default_speed : Enemy.default_speed
+  }
 
 }
