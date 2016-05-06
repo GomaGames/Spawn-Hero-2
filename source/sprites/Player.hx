@@ -8,10 +8,22 @@ import flixel.math.FlxPoint;
 
 class PlayerInput {
   // map Int-> Player number
-  public static var up:IntMap<FlxKey> = [ 1 => FlxKey.UP ];
-  public static var down:IntMap<FlxKey> = [ 1 => FlxKey.DOWN ];
-  public static var left:IntMap<FlxKey> = [ 1 => FlxKey.LEFT ];
-  public static var right:IntMap<FlxKey> = [ 1 => FlxKey.RIGHT ];
+  public static var up:IntMap<FlxKey> = [
+    1 => FlxKey.UP,
+    2 => FlxKey.W
+  ];
+  public static var down:IntMap<FlxKey> = [
+    1 => FlxKey.DOWN,
+    2 => FlxKey.S
+  ];
+  public static var left:IntMap<FlxKey> = [
+    1 => FlxKey.LEFT,
+    2 => FlxKey.A
+  ];
+  public static var right:IntMap<FlxKey> = [
+    1 => FlxKey.RIGHT,
+    2 => FlxKey.D
+  ];
 }
 
 class Player extends FlxSprite {
@@ -45,21 +57,21 @@ class Player extends FlxSprite {
       , moving_v = false;
 
     if(!this.attacking){
-      if (FlxG.keys.anyPressed([PlayerInput.up.get(1)])){
+      if (FlxG.keys.anyPressed([PlayerInput.up.get(this.player_num)])){
         // this.acceleration.y = -GG.hero_speed;
         this.acceleration.y = -this.speed *10;
         moving_v = true;
       }
-      if (FlxG.keys.anyPressed([PlayerInput.down.get(1)])){
+      if (FlxG.keys.anyPressed([PlayerInput.down.get(this.player_num)])){
         this.acceleration.y = this.speed *10;
         moving_v = true;
       }
-      if (FlxG.keys.anyPressed([PlayerInput.left.get(1)])){
+      if (FlxG.keys.anyPressed([PlayerInput.left.get(this.player_num)])){
         // this.acceleration.y = -GG.hero_speed;
         this.acceleration.x = -this.speed *10;
         moving_h = true;
       }
-      if (FlxG.keys.anyPressed([PlayerInput.right.get(1)])){
+      if (FlxG.keys.anyPressed([PlayerInput.right.get(this.player_num)])){
         this.acceleration.x = this.speed *10;
         moving_h = true;
       }

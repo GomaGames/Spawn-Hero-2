@@ -12,7 +12,8 @@ import sprites.Player;
 class PlayState extends FlxState
 {
   private var map:Map;
-  private var player:Player;
+  private var player_1:Player;
+  private var player_2:Player;
 
 	override public function create():Void
 	{
@@ -20,8 +21,11 @@ class PlayState extends FlxState
     map = new Map(this);
     add(map);
 
-    player = new Player(this,1,10,10);
-    add(player);
+    player_1 = new Player(this,1,10,10);
+    add(player_1);
+
+    player_2 = new Player(this,2,100,100);
+    add(player_2);
 	}
 
 	override public function update(elapsed:Float):Void
