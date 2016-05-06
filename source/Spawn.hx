@@ -26,6 +26,7 @@ typedef PlacePickup = { > Placeable,
   private static inline var WALL_GRAPHIC = "assets/images/game_wall.png";
   private static inline var FREEZE_GRAPHIC = "assets/images/graphic-49.png";
   private static inline var SPEED_GRAPHIC = "assets/images/game_good.png";
+  private static inline var SLOW_GRAPHIC = "assets/images/graphic-45.png";
   private static inline var GEM_GRAPHIC = "assets/images/graphic-57.png";
 
   public static var state:PlayState;
@@ -47,6 +48,11 @@ typedef PlacePickup = { > Placeable,
     pickups.add( { type: SPEED, x : x, y : y, graphic : SPEED_GRAPHIC } );
   }
 
+  public static inline function slow(x:Int, y:Int):Void
+  {
+    pickups.add( { type: SLOW, x : x, y : y, graphic : SLOW_GRAPHIC } );
+  }
+
   public static inline function gem(x:Int, y:Int):Void
   {
     pickups.add( { type: GEM, x : x, y : y, graphic : GEM_GRAPHIC } );
@@ -60,6 +66,7 @@ typedef PlacePickup = { > Placeable,
     wall( 160, 200 );
     freeze( 200, 200 );
     speed( 160, 100 );
+    slow( 160, 300 );
     gem( 200, 100 );
   }
 #end
