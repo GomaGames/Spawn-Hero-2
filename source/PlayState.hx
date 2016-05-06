@@ -24,11 +24,11 @@ class PlayState extends FlxState
 
 		super.create();
     map = new Map(this);
-    map.makeGraphic( Main.STAGE_WIDTH, Main.STAGE_HEIGHT );
+    map.makeGraphic( Main.STAGE_WIDTH, Main.STAGE_HEIGHT, Main.BACKGROUND_GREY );
     Map.drawGridLines( this, map );
     Map.drawTopBar( this, map );
 
-    bgColor = flixel.util.FlxColor.WHITE;
+    bgColor = Main.BACKGROUND_GREY;
     add(map);
  
     player_1 = new Player(this,1,10,10);

@@ -13,15 +13,13 @@ class TitleState extends FlxState
   override public function create():Void
   {
     super.create();
-    bgColor = FlxColor.GRAY;
+    bgColor = Main.BACKGROUND_GREY;
 
-    var titleText = new FlxText( Main.STAGE_WIDTH/4, Main.STAGE_HEIGHT/3, "SPAWN HERO", 72 );
-    titleText.font = AssetPaths.CHUNKY_FONT;
-    add( titleText );
-
-    var startText = new FlxText( 2*(Main.STAGE_WIDTH/5), Main.STAGE_HEIGHT/2, "START", 48 );
-    startText.font = AssetPaths.CHUNKY_FONT;
-    add( startText );
+    var titleImage = new FlxSprite();
+    titleImage.loadGraphic( AssetPaths.TITLE_SCREEN );
+    titleImage.scale.set(0.5, 0.5);
+    titleImage.screenCenter();
+    add( titleImage );
   }
 
   override public function update(elapsed:Float):Void
