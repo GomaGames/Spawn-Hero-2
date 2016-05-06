@@ -8,6 +8,7 @@ import flixel.ui.FlxButton;
 import flixel.math.FlxMath;
 import flixel.util.FlxColor;
 import flixel.util.FlxAxes;
+import flixel.util.FlxTimer;
 import sprites.Player;
 
 enum EndType {
@@ -22,6 +23,9 @@ class EndState extends FlxState
   private var p1Score:Int;
   private var p2Score:Int;
   private var end_type:EndType;
+  private var allow_continue:Bool; // don't allow rapid continue while holding buttons
+  private var resolve_timer:FlxTimer; // don't allow rapid continue while holding buttons
+  private static inline var resolve_delay:Int = 5; // seconds
 
   private inline function resolveWinner( p1Score:Int, p2Score:Int ):String
   {
@@ -80,11 +84,16 @@ class EndState extends FlxState
     player2Score.setFormat( "Arial", 88, Main.FONT_RED, FlxTextAlign.CENTER, FlxTextBorderStyle.SHADOW, FlxColor.BLACK, true);
     add( player2Score );
 
-    var playAgain = new FlxText( 3*(Main.STAGE_WIDTH/5), Main.STAGE_HEIGHT * (3/4), "PLAY AGAIN?" );
-    playAgain.setFormat( "Arial", 60, Main.FONT_YELLOW, FlxTextAlign.CENTER, FlxTextBorderStyle.SHADOW, FlxColor.BLACK, true);
-    playAgain.screenCenter( FlxAxes.X );
-    add( playAgain );
+    resolve_timer = new FlxTimer();
+    resolve_timer.start(resolve_delay, function(t){
+      allow_continue = true;
 
+      var playAgain = new FlxText( 3*(Main.STAGE_WIDTH/5), Main.STAGE_HEIGHT * (3/4), "PLAY AGAIN?" );
+      playAgain.setFormat( "Arial", 60, Main.FONT_YELLOW, FlxTextAlign.CENTER, FlxTextBorderStyle.SHADOW, FlxColor.BLACK, true);
+      playAgain.screenCenter( FlxAxes.X );
+      add( playAgain );
+
+    });
   }
 
   override public function destroy():Void
@@ -96,7 +105,7 @@ class EndState extends FlxState
   }
   override public function update(elapsed:Float):Void
   {
-    if( FlxG.keys.getIsDown().length > 0 ) FlxG.switchState( new MenuState() );
+    if( allow_continue && FlxG.keys.getIsDown().length > 0 ) FlxG.switchState( new MenuState() );
     super.update(elapsed);
   }
 
