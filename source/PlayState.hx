@@ -127,6 +127,7 @@ class PlayState extends FlxState
               hero.freeze(pickup.DURATION);
             case sprites.pickups.Gem:
               hero.score(pickup.POINTS);
+              victory_check();
           }
         }
       }
@@ -142,6 +143,15 @@ class PlayState extends FlxState
           hero.die();
         }
       }
+    }
+  }
+
+  private inline function victory_check():Void
+  {
+    if( Lambda.filter(pickups, function(p){
+      return Type.getClass(p) == sprites.pickups.Gem;
+    }).length == 0 ){
+      FlxG.switchState(new EndState(player_1.points, player_2.points, EndState.EndType.FINISH));
     }
   }
 
