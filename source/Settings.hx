@@ -36,4 +36,9 @@ import sprites.pickups.*;
     default_duration : Freeze.DEFAULT_DURATION
   }
 
+  public static var speed = {
+    default_skin : Speed.DEFAULT_SKIN,
+    default_duration : Speed.DEFAULT_DURATION
+  }
+
 }

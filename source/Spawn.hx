@@ -39,7 +39,6 @@ typedef Enemy = {
 @:expose class Spawn {
 
   public static inline var WALL_GRAPHIC = "assets/images/game_wall.png";
-  private static inline var SPEED_GRAPHIC = "assets/images/game_good.png";
   private static inline var SLOW_GRAPHIC = "assets/images/graphic-45.png";
 
   public static var hero_1_setting:HeroSetting;
@@ -75,10 +74,17 @@ typedef Enemy = {
     });
   }
 
-  public static inline function speed(x:Int, y:Int):Void
+  public static inline function speed(x:Int, y:Int, ?duration:Int, ?skin:String):Void
   {
-    pickups.add( { type: SPEED, x : x, y : y, skin : SPEED_GRAPHIC } );
+    pickups.add({
+      type: SPEED,
+      x : x,
+      y : y,
+      skin : skin != null ? skin : Settings.speed.default_skin,
+      duration : duration != null ? duration : Settings.speed.default_duration
+    });
   }
+
 
   public static inline function slow(x:Int, y:Int):Void
   {

@@ -77,13 +77,13 @@ class PlayState extends FlxState
           new sprites.pickups.Gem(pickup.x, pickup.y, pickup.skin, pickup.points);
 
         case FREEZE:
-          new sprites.pickups.Freeze(pickup.x, pickup.y, pickup.skin);
+          new sprites.pickups.Freeze(pickup.x, pickup.y, pickup.skin, pickup.duration);
 
         case SLOW:
-          new sprites.pickups.Slow(pickup.x, pickup.y, pickup.skin);
+          new sprites.pickups.Slow(pickup.x, pickup.y, pickup.skin, pickup.duration);
 
         case SPEED:
-          new sprites.pickups.Speed(pickup.x, pickup.y, pickup.skin);
+          new sprites.pickups.Speed(pickup.x, pickup.y, pickup.skin, pickup.duration);
 
       }
 
