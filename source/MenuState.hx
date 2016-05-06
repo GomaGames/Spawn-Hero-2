@@ -11,7 +11,7 @@ import flixel.util.FlxTimer;
 
 class MenuState extends FlxState
 {
-  private var continue_delay:Int = 2; // don't allow rapid continue while holding buttons
+  private var continue_delay:Int = 1; // don't allow rapid continue while holding buttons
   private var allow_continue:Bool; // don't allow rapid continue while holding buttons
   private var continue_timer:FlxTimer; // don't allow rapid continue while holding buttons
   private var ready_text:FlxText; // don't allow rapid continue while holding buttons
