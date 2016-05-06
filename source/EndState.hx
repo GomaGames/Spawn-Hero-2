@@ -8,8 +8,19 @@ import flixel.ui.FlxButton;
 import flixel.math.FlxMath;
 import flixel.util.FlxColor;
 
+enum EndType {
+  TIME_OUT;
+  SURVIVED; // if there are no gems, timed out
+  FINISH; // if there are gems, all gems have been collected
+}
+
 class EndState extends FlxState
 {
+  public function new(player_1_score:Int, player_2_score:Int, end_type:EndType){
+    super();
+
+  }
+
   override public function create():Void
   {
     super.create();

@@ -42,8 +42,7 @@ class PlayState extends FlxState
 
     timer = new FlxTimer();
     timer.start(Settings.time_limit, function(t){
-      // switchTo(new EndState(player_1.points, player_2.points, EndType.TIME_OUT));
-      trace("Game Over");
+      FlxG.switchState(new EndState(player_1.points, player_2.points, EndState.EndType.TIME_OUT));
     });
 
 #if neko
