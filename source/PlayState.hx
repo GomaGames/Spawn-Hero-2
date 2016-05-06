@@ -189,8 +189,10 @@ class PlayState extends FlxState
   override public function update(elapsed:Float):Void
   {
     timer_text.text = Std.string(Std.int(timer.timeLeft));
-    p1score.text = Std.string(player_1.points);
-    p2score.text = Std.string(player_2.points);
+    if( player_1 != null && player_2 != null ){
+      p1score.text = Std.string(player_1.points);
+      p2score.text = Std.string(player_2.points);
+    }
     super.update(elapsed);
 
     pickup_collision();
