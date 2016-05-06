@@ -10,6 +10,7 @@ import flixel.util.FlxSpriteUtil;
 import flixel.util.FlxColor;
 import sprites.Map;
 import sprites.Player;
+import sprites.Enemy;
 import sprites.pickups.Pickup;
 
 class PlayState extends FlxState
@@ -19,11 +20,13 @@ class PlayState extends FlxState
   private var player_2:Player;
   private var spawn_engine:Spawn;
   private var pickups:List<Pickup>;
+  private var enemies:List<Enemy>;
 
 
 	override public function create():Void
 	{
     pickups = new List<Pickup>();
+    enemies = new List<Enemy>();
 
 		super.create();
     map = new Map(this);
@@ -71,6 +74,11 @@ class PlayState extends FlxState
     }
 
     // enemies
+    for( enemy in Spawn.enemies ){
+      var new_enemy = new Enemy(enemy.x, enemy.y, enemy.graphic, enemy.direction);
+      enemies.add(new_enemy);
+      add(new_enemy);
+    }
 
     // heros
     if( Spawn.hero_1_setting != null ){
@@ -101,7 +109,6 @@ class PlayState extends FlxState
               hero.freeze(pickup.DURATION);
             case sprites.pickups.Gem:
               hero.score(pickup.POINTS);
-
           }
         }
       }

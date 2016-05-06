@@ -26,6 +26,13 @@ typedef HeroSetting = {
   y : Int
 }
 
+typedef Enemy = {
+  x : Int,
+  y : Int,
+  direction : String,
+  graphic : String
+}
+
 @:expose class Spawn {
 
   private static inline var WALL_GRAPHIC = "assets/images/game_wall.png";
@@ -33,12 +40,14 @@ typedef HeroSetting = {
   private static inline var SPEED_GRAPHIC = "assets/images/game_good.png";
   private static inline var SLOW_GRAPHIC = "assets/images/graphic-45.png";
   private static inline var GEM_GRAPHIC = "assets/images/graphic-57.png";
+  private static inline var ENEMY_GRAPHIC = "assets/images/graphic-27.png";
 
   public static var hero_1_setting:HeroSetting;
   public static var hero_2_setting:HeroSetting;
   public static var state:PlayState;
   public static var pickups = new List<PlacePickup>();
   public static var walls = new List<Wall>();
+  public static var enemies = new List<Enemy>();
 
   public static inline function hero_1(x:Int, y:Int):Void
   {
@@ -73,7 +82,11 @@ typedef HeroSetting = {
   public static inline function gem(x:Int, y:Int):Void
   {
     pickups.add( { type: GEM, x : x, y : y, graphic : GEM_GRAPHIC } );
+  }
 
+  public static inline function enemy(x:Int, y:Int, ?direction:String):Void
+  {
+    enemies.add( { direction: direction, x : x, y : y, graphic : ENEMY_GRAPHIC } );
   }
 
 #if neko
@@ -87,6 +100,8 @@ typedef HeroSetting = {
     speed( 160, 100 );
     slow( 160, 300 );
     gem( 200, 100 );
+    enemy( 600, 500 );
+    enemy( 500, 450 );
   }
 #end
 
