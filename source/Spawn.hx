@@ -38,7 +38,7 @@ typedef Enemy = {
 
 @:expose class Spawn {
 
-  public static inline var WALL_GRAPHIC = "assets/images/game_wall.png";
+  public static inline var DEFAULT_WALL_SKIN = "assets/images/game_wall.png";
 
   public static var hero_1_setting:HeroSetting;
   public static var hero_2_setting:HeroSetting;
@@ -57,9 +57,13 @@ typedef Enemy = {
     hero_2_setting = { x : x, y : y };
   }
 
-  public static inline function wall(x:Int, y:Int):Void
+  public static inline function wall(x:Int, y:Int, ?skin:String):Void
   {
-    walls.add( { x : x, y : y, skin : Settings.wall.skin } );
+    walls.add({
+      x : x,
+      y : y,
+      skin : skin != null ? skin : Settings.wall.default_skin,
+    });
   }
 
   public static inline function freeze(x:Int, y:Int, ?duration:Int, ?skin:String):Void

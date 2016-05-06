@@ -23,7 +23,7 @@ import sprites.pickups.*;
   }
 
   public static var wall = {
-    skin : Spawn.WALL_GRAPHIC
+    default_skin : Spawn.DEFAULT_WALL_SKIN
   }
 
   public static var gem = {
