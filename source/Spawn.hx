@@ -21,6 +21,11 @@ typedef PlacePickup = { > Placeable,
   type : PickupType
 }
 
+typedef HeroSetting = {
+  x : Int,
+  y : Int
+}
+
 @:expose class Spawn {
 
   private static inline var WALL_GRAPHIC = "assets/images/game_wall.png";
@@ -29,9 +34,21 @@ typedef PlacePickup = { > Placeable,
   private static inline var SLOW_GRAPHIC = "assets/images/graphic-45.png";
   private static inline var GEM_GRAPHIC = "assets/images/graphic-57.png";
 
+  public static var hero_1_setting:HeroSetting;
+  public static var hero_2_setting:HeroSetting;
   public static var state:PlayState;
   public static var pickups = new List<PlacePickup>();
   public static var walls = new List<Wall>();
+
+  public static inline function hero_1(x:Int, y:Int):Void
+  {
+    hero_1_setting = { x : x, y : y };
+  }
+
+  public static inline function hero_2(x:Int, y:Int):Void
+  {
+    hero_2_setting = { x : x, y : y };
+  }
 
   public static inline function wall(x:Int, y:Int):Void
   {
@@ -62,6 +79,8 @@ typedef PlacePickup = { > Placeable,
 #if neko
   public static inline function dev():Void
   {
+    hero_1( 0, 0 );
+    hero_2( 400, 0 );
     wall( 120, 240 );
     wall( 160, 200 );
     freeze( 200, 200 );

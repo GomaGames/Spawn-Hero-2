@@ -32,11 +32,6 @@ class PlayState extends FlxState
     bgColor = flixel.util.FlxColor.WHITE;
     add(map);
 
-    player_1 = new Player(this,1,10,10);
-    add(player_1);
-
-    player_2 = new Player(this,2,100,100);
-    add(player_2);
 
 #if neko
     Spawn.dev();
@@ -78,6 +73,15 @@ class PlayState extends FlxState
     // enemies
 
     // heros
+    if( Spawn.hero_1_setting != null ){
+      player_1 = new Player(this,1,Spawn.hero_1_setting.x,Spawn.hero_1_setting.y);
+      add(player_1);
+    }
+
+    if( Spawn.hero_1_setting != null ){
+      player_2 = new Player(this,2,Spawn.hero_2_setting.x,Spawn.hero_2_setting.y);
+      add(player_2);
+    }
 
   }
 
