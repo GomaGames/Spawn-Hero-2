@@ -18,6 +18,10 @@ class Enemy extends FlxSprite {
     super(x, y, skin);
     this.scale.set(.5,.5);
     this.updateHitbox();
+    this.height /= 2;
+    this.width /= 2;
+    this.centerOffsets();
+    this.centerOrigin();
     this.elasticity = 1;
     if(direction != null){
       switch(direction){
