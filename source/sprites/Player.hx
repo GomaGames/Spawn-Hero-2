@@ -36,6 +36,7 @@ class Player extends FlxSprite {
 
   public var points:Int;
 
+  private var state:PlayState;
   private var player_num:Int;
   private var graphic_path:String;
   private var attacking:Bool;
@@ -59,6 +60,7 @@ class Player extends FlxSprite {
     this.points = 0;
     this.walkRot = 0;
     this.walkHopY = 0;
+    this.state = state;
   }
 
   override public function update(elapsed:Float):Void
@@ -153,9 +155,14 @@ class Player extends FlxSprite {
 
   public inline function die():Void
   {
-    this.x = spawn_position.x;
-    this.y = spawn_position.y;
-    this.velocity.set(0,0);
+    if( this.state.survival_type ){
+      this.alive = false;
+      this.destroy();
+    } else { // respawn
+      this.x = spawn_position.x;
+      this.y = spawn_position.y;
+      this.velocity.set(0,0);
+    }
   }
 }
 

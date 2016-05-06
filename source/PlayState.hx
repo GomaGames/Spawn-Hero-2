@@ -23,7 +23,7 @@ class PlayState extends FlxState
   private var pickups:List<Pickup>;
   private var enemies:List<Enemy>;
   private var timer:FlxTimer;
-  private var survival_type:Bool;
+  public var survival_type:Bool; // true? only one life
   private var timer_text:FlxText;
   private var p1score:FlxText;
   private var p2score:FlxText;
@@ -46,8 +46,8 @@ class PlayState extends FlxState
     timer = new FlxTimer();
     timer.start(Settings.time_limit, function(t){
       FlxG.switchState(new EndState(
-            player_1.points,
-            player_2.points,
+            player_1,
+            player_2,
             survival_type ?
               EndState.EndType.SURVIVED :
               EndState.EndType.TIME_OUT
@@ -156,8 +156,18 @@ class PlayState extends FlxState
       for( hero in [player_1,player_2] ){
         if( FlxG.collide(hero, enemy) ){
           hero.die();
+          survival_check();
         }
       }
+    }
+  }
+
+  private inline function survival_check():Void
+  {
+    if( Lambda.filter([player_1,player_2], function(p){
+      return p.alive;
+    }).length == 0 ){
+      FlxG.switchState(new EndState(player_1, player_2, EndState.EndType.NO_SURVIVORS));
     }
   }
 
@@ -166,7 +176,7 @@ class PlayState extends FlxState
     if( Lambda.filter(pickups, function(p){
       return Type.getClass(p) == sprites.pickups.Gem;
     }).length == 0 ){
-      FlxG.switchState(new EndState(player_1.points, player_2.points, EndState.EndType.FINISH));
+      FlxG.switchState(new EndState(player_1, player_2, EndState.EndType.FINISH));
     }
   }
 
@@ -178,6 +188,7 @@ class PlayState extends FlxState
     spawn_engine = null;
     pickups = null;
     enemies = null;
+    timer.cancel();
     timer = null;
     survival_type = null;
     timer_text = null;
@@ -200,5 +211,5 @@ class PlayState extends FlxState
     touch_enemy();
 
     FlxG.collide();
-  } 
+  }
 }

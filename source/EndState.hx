@@ -8,10 +8,12 @@ import flixel.ui.FlxButton;
 import flixel.math.FlxMath;
 import flixel.util.FlxColor;
 import flixel.util.FlxAxes;
+import sprites.Player;
 
 enum EndType {
   TIME_OUT;
-  SURVIVED; // if there are no gems, timed out
+  SURVIVED; // if there are no gems, timed out, there is a survivor
+  NO_SURVIVORS; // if there are no gems, there is no survivors, all lose
   FINISH; // if there are gems, all gems have been collected
 }
 
@@ -21,24 +23,25 @@ class EndState extends FlxState
   private var p2Score:Int;
   private var end_type:EndType;
 
-  private inline function resolveWinner( p1Score:Int, p2Score:Int, ?end_type:EndType ):String
+  private inline function resolveWinner( p1Score:Int, p2Score:Int ):String
   {
     if( p1Score == p2Score ) return "It's a tie!"; // REFACTOR WHEN SURVIVAL IS IMPLEMENTED
     var winner = ( p1Score > p2Score )?1:2;
-    var text = switch( end_type ){
-      // TODO: VICTORY CONDITIONS 
+    var text = switch( this.end_type ){
+      // TODO: VICTORY CONDITIONS
       case EndType.TIME_OUT: 'Hero ${winner} Wins!';
-      case EndType.SURVIVED: 'Hero ${winner} Survived!';
+      case EndType.SURVIVED: 'Hero Survived!';
+      case EndType.NO_SURVIVORS: 'Nobody survived!';
       case EndType.FINISH: 'Hero ${winner} Wins!';
       default: 'Hero ${winner} Wins!';
     }
     return text;
   }
 
-  public function new(player_1_score:Int, player_2_score:Int, end_type:EndType){
+  public function new(player_1:Player, player_2:Player, end_type:EndType){
     super();
-    this.p1Score = player_1_score;
-    this.p2Score = player_2_score;
+    this.p1Score = player_1.points;
+    this.p2Score = player_2.points;
     this.end_type = end_type;
   }
 
@@ -52,7 +55,7 @@ class EndState extends FlxState
     headerText.screenCenter( FlxAxes.X );
     add( headerText );
 
-    var winnerText = new FlxText( Main.STAGE_WIDTH / 2, Main.STAGE_HEIGHT * (20/100), resolveWinner( this.p1Score, this.p2Score, this.end_type ));
+    var winnerText = new FlxText( Main.STAGE_WIDTH / 2, Main.STAGE_HEIGHT * (20/100), resolveWinner( this.p1Score, this.p2Score ));
     winnerText.setFormat( AssetPaths.CHUNKY_FONT, 72, Main.FONT_RED, FlxTextAlign.CENTER, FlxTextBorderStyle.SHADOW, FlxColor.BLACK, true);
     winnerText.screenCenter( FlxAxes.X );
     add( winnerText );
@@ -60,7 +63,7 @@ class EndState extends FlxState
     var player1TextX = (1/5) * Main.STAGE_WIDTH;
     var player2TextX = (3/5) * Main.STAGE_WIDTH;
     var playerTextY = (40/100) * Main.STAGE_HEIGHT;
-    
+
     var player1Text = new FlxText( player1TextX, playerTextY, "Hero 1" );
     player1Text.setFormat( AssetPaths.CHUNKY_FONT, 52, Main.FONT_GREY, FlxTextAlign.CENTER, FlxTextBorderStyle.SHADOW, FlxColor.BLACK, true);
     add( player1Text );
