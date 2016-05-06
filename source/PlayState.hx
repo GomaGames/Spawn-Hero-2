@@ -20,7 +20,7 @@ class PlayState extends FlxState
     map = new Map(this);
     add(map);
 
-    player = new Player(this,10,10);
+    player = new Player(this,1,10,10);
     add(player);
 	}
 
