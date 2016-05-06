@@ -205,7 +205,7 @@ ApplicationMain.init = function() {
 	if(total == 0) ApplicationMain.start();
 };
 ApplicationMain.main = function() {
-	ApplicationMain.config = { build : "229", company : "GomaGames", file : "SpawnHero2", fps : 60, name : "SpawnHero2", orientation : "", packageName : "com.example.myapp", version : "0.0.1", windows : [{ antialiasing : 0, background : 16777215, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 680, parameters : "{}", resizable : false, stencilBuffer : true, title : "SpawnHero2", vsync : true, width : 920, x : null, y : null}]};
+	ApplicationMain.config = { build : "231", company : "GomaGames", file : "SpawnHero2", fps : 60, name : "SpawnHero2", orientation : "", packageName : "com.example.myapp", version : "0.0.1", windows : [{ antialiasing : 0, background : 16777215, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 680, parameters : "{}", resizable : false, stencilBuffer : true, title : "SpawnHero2", vsync : true, width : 920, x : null, y : null}]};
 };
 ApplicationMain.start = function() {
 	var hasMain = false;
@@ -5429,15 +5429,21 @@ EndState.prototype = $extend(flixel_FlxState.prototype,{
 		player2Text.setFormat("assets/fonts/Chunkfive-webfont.ttf",52,Main.FONT_GREY,"center",flixel_text_FlxTextBorderStyle.SHADOW,-16777216,true);
 		this.add(player2Text);
 		var player1Score = new flixel_text_FlxText(player1TextX + 50,playerTextY + playerTextY / 4,null,Std.string(this.p1Score));
-		player1Score.setFormat("assets/fonts/Chunkfive-webfont.ttf",90,Main.FONT_RED,"center",flixel_text_FlxTextBorderStyle.SHADOW,-16777216,true);
+		player1Score.setFormat("assets/fonts/Chunkfive-webfont.ttf",90,Main.FONT_BLUE,"center",flixel_text_FlxTextBorderStyle.SHADOW,-16777216,true);
 		this.add(player1Score);
 		var player2Score = new flixel_text_FlxText(player2TextX + 50,playerTextY + playerTextY / 4,null,Std.string(this.p2Score));
-		player2Score.setFormat("assets/fonts/Chunkfive-webfont.ttf",88,Main.FONT_BLUE,"center",flixel_text_FlxTextBorderStyle.SHADOW,-16777216,true);
+		player2Score.setFormat("assets/fonts/Chunkfive-webfont.ttf",88,Main.FONT_RED,"center",flixel_text_FlxTextBorderStyle.SHADOW,-16777216,true);
 		this.add(player2Score);
 		var playAgain = new flixel_text_FlxText(552.,510.,null,"PLAY AGAIN?");
 		playAgain.setFormat("assets/fonts/Chunkfive-webfont.ttf",60,Main.FONT_YELLOW,"center",flixel_text_FlxTextBorderStyle.SHADOW,-16777216,true);
 		playAgain.screenCenter(flixel_util_FlxAxes.X);
 		this.add(playAgain);
+	}
+	,destroy: function() {
+		this.p1Score = null;
+		this.p2Score = null;
+		this.end_type = null;
+		flixel_FlxState.prototype.destroy.call(this);
 	}
 	,update: function(elapsed) {
 		if(flixel_FlxG.keys.getIsDown().length > 0) flixel_FlxG.switchState(new MenuState());
@@ -5600,8 +5606,10 @@ NMEPreloader.prototype = $extend(openfl_display_Sprite.prototype,{
 	}
 	,__class__: NMEPreloader
 });
-var PlayState = function(MaxSize) {
-	flixel_FlxState.call(this,MaxSize);
+var PlayState = function() {
+	flixel_FlxState.call(this);
+	this.player_1 = null;
+	this.player_2 = null;
 };
 $hxClasses["PlayState"] = PlayState;
 PlayState.__name__ = ["PlayState"];
@@ -5624,11 +5632,11 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 		this.timer.start(Settings.time_limit,function(t) {
 			flixel_FlxG.switchState(new EndState(_g.player_1.points,_g.player_2.points,_g.survival_type?EndType.SURVIVED:EndType.TIME_OUT));
 		});
-		this.p1score = new flixel_text_FlxText(160.,10,null,"0");
-		this.p1score.setFormat("assets/fonts/Chunkfive-webfont.ttf",18,Main.FONT_RED,"left",flixel_text_FlxTextBorderStyle.SHADOW,-16777216,true);
+		this.p1score = new flixel_text_FlxText(840.,10,null,"0");
+		this.p1score.setFormat("assets/fonts/Chunkfive-webfont.ttf",18,Main.FONT_BLUE,"left",flixel_text_FlxTextBorderStyle.SHADOW,-16777216,true);
 		this.add(this.p1score);
-		this.p2score = new flixel_text_FlxText(840.,10,null,"0");
-		this.p2score.setFormat("assets/fonts/Chunkfive-webfont.ttf",18,Main.FONT_BLUE,"left",flixel_text_FlxTextBorderStyle.SHADOW,-16777216,true);
+		this.p2score = new flixel_text_FlxText(160.,10,null,"0");
+		this.p2score.setFormat("assets/fonts/Chunkfive-webfont.ttf",18,Main.FONT_RED,"left",flixel_text_FlxTextBorderStyle.SHADOW,-16777216,true);
 		this.add(this.p2score);
 		this.timer_text = new flixel_text_FlxText(460.,10,null,Std.string(this.timer.time | 0));
 		this.timer_text.setFormat("assets/fonts/Chunkfive-webfont.ttf",18,Main.FONT_GREY,"left",flixel_text_FlxTextBorderStyle.SHADOW,-16777216,true);
@@ -5778,6 +5786,20 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 		if(Lambda.filter(this.pickups,function(p) {
 			return (p == null?null:js_Boot.getClass(p)) == sprites_pickups_Gem;
 		}).length == 0) flixel_FlxG.switchState(new EndState(this.player_1.points,this.player_2.points,EndType.FINISH));
+	}
+	,destroy: function() {
+		this.map = null;
+		this.player_1 = null;
+		this.player_2 = null;
+		this.spawn_engine = null;
+		this.pickups = null;
+		this.enemies = null;
+		this.timer = null;
+		this.survival_type = null;
+		this.timer_text = null;
+		this.p1score = null;
+		this.p2score = null;
+		flixel_FlxState.prototype.destroy.call(this);
 	}
 	,update: function(elapsed) {
 		this.timer_text.set_text(Std.string(Std["int"](this.timer.get_timeLeft())));
