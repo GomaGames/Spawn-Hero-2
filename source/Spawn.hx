@@ -104,14 +104,15 @@ typedef Enemy = {
 #if neko
   public static inline function dev():Void
   {
-    hero_1( 0, 0 );
-    hero_2( 400, 0 );
+    hero_1( 0, 50 );
+    hero_2( 400, 50 );
     wall( 120, 240 );
     wall( 160, 200 );
     freeze( 200, 200 );
     speed( 160, 100 );
     slow( 160, 300 );
     gem( 200, 100 );
+    gem( 200, 400 );
     enemy( 650, 500 , "down");
     wall( 650, 600 );
     enemy( 500, 550 , "right");

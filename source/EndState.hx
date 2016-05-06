@@ -17,14 +17,13 @@ enum EndType {
 
 class EndState extends FlxState
 {
-  // TO BE REPLACED WITH ACTUAL SCORES
   private var p1Score:Int;
   private var p2Score:Int;
   private var end_type:EndType;
 
   private inline function resolveWinner( p1Score:Int, p2Score:Int, ?end_type:EndType ):String
   {
-    if( p1Score == p2Score ) return "It's a tie!";
+    if( p1Score == p2Score ) return "It's a tie!"; // REFACTOR WHEN SURVIVAL IS IMPLEMENTED
     var winner = ( p1Score > p2Score )?1:2;
     var text = switch( end_type ){
       // TODO: VICTORY CONDITIONS 
