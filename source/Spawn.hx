@@ -39,6 +39,7 @@ typedef Enemy = {
 @:expose class Spawn {
 
   public static inline var DEFAULT_WALL_SKIN = "assets/images/17.png";
+  private static inline var TOPBAR_Y_OFFSET = 40; // pixels from top
 
   public static var hero_1_setting:HeroSetting;
   public static var hero_2_setting:HeroSetting;
@@ -49,19 +50,19 @@ typedef Enemy = {
 
   public static inline function hero_1(x:Int, y:Int):Void
   {
-    hero_1_setting = { x : x, y : y };
+    hero_1_setting = { x : x, y : y + TOPBAR_Y_OFFSET };
   }
 
   public static inline function hero_2(x:Int, y:Int):Void
   {
-    hero_2_setting = { x : x, y : y };
+    hero_2_setting = { x : x, y : y + TOPBAR_Y_OFFSET };
   }
 
   public static inline function wall(x:Int, y:Int, ?skin:String):Void
   {
     walls.add({
       x : x,
-      y : y,
+      y : y + TOPBAR_Y_OFFSET,
       skin : skin != null ? skin : Settings.wall.default_skin,
     });
   }
@@ -71,7 +72,7 @@ typedef Enemy = {
     pickups.add({
       type: FREEZE,
       x : x,
-      y : y,
+      y : y + TOPBAR_Y_OFFSET,
       skin : skin != null ? skin : Settings.freeze.default_skin,
       duration : duration != null ? duration : Settings.freeze.default_duration
     });
@@ -82,7 +83,7 @@ typedef Enemy = {
     pickups.add({
       type: SPEED,
       x : x,
-      y : y,
+      y : y + TOPBAR_Y_OFFSET,
       skin : skin != null ? skin : Settings.speed.default_skin,
       duration : duration != null ? duration : Settings.speed.default_duration
     });
@@ -94,7 +95,7 @@ typedef Enemy = {
     pickups.add({
       type: SLOW,
       x : x,
-      y : y,
+      y : y + TOPBAR_Y_OFFSET,
       skin : skin != null ? skin : Settings.slow.default_skin,
       duration : duration != null ? duration : Settings.slow.default_duration
     });
@@ -105,7 +106,7 @@ typedef Enemy = {
     pickups.add({
       type: GEM,
       x : x,
-      y : y,
+      y : y + TOPBAR_Y_OFFSET,
       skin : skin != null ? skin : Settings.gem.default_skin,
       points : points != null ? points : Settings.gem.default_points
     });
@@ -116,7 +117,7 @@ typedef Enemy = {
     enemies.add({
       direction: direction,
       x : x,
-      y : y,
+      y : y + TOPBAR_Y_OFFSET,
       skin : skin != null ? skin : Settings.enemy.default_skin,
       speed : speed != null ? speed : Settings.enemy.default_speed
     });
@@ -138,6 +139,7 @@ typedef Enemy = {
       gem( 200, 400 );
       enemy( 650, 500 , "down");
       wall( 650, 600 );
+      wall( 240, 0 );
       enemy( 500, 550 , "right");
       enemy( 600, 500 , "up");
       enemy( 500, 450 , "left");
