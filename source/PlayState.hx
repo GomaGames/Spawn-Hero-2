@@ -117,11 +117,24 @@ class PlayState extends FlxState
     }
   }
 
+  private inline function touch_enemy():Void
+  {
+    for( enemy in enemies ){
+      for( hero in [player_1,player_2] ){
+        if( FlxG.collide(hero, enemy) ){
+          hero.die();
+        }
+      }
+    }
+  }
+
 	override public function update(elapsed:Float):Void
 	{
 		super.update(elapsed);
 
     pickup_collision();
+
+    touch_enemy();
 
     FlxG.collide();
 	}

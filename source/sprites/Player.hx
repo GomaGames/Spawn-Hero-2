@@ -39,10 +39,12 @@ class Player extends FlxSprite {
   private var graphic_path:String;
   private var attacking:Bool;
   private var speed:Int;
+  private var spawn_position:FlxPoint;
 
   public function new(state:PlayState, player_num:Int, x:Int, y:Int) {
     super(x, y, default_graphic);
 
+    this.spawn_position = FlxPoint.weak(x, y);
     this.player_num = player_num;
     this.speed = base_speed;
     this.drag = FlxPoint.weak(this.speed*10, this.speed*10);
@@ -129,6 +131,13 @@ class Player extends FlxSprite {
   public inline function score(points:Int):Void
   {
     this.points += points;
+  }
+
+  public inline function die():Void
+  {
+    this.x = spawn_position.x;
+    this.y = spawn_position.y;
+    this.velocity.set(0,0);
   }
 }
 
