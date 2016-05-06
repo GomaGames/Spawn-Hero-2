@@ -12,13 +12,14 @@ enum PickupType{
 typedef Placeable = {
   x : Int,
   y : Int,
-  graphic : String
+  skin : String
 }
 
 typedef Wall = Placeable;
 
 typedef PlacePickup = { > Placeable,
-  type : PickupType
+  type : PickupType,
+  ?points : Int
 }
 
 typedef HeroSetting = {
@@ -30,17 +31,16 @@ typedef Enemy = {
   x : Int,
   y : Int,
   direction : String,
-  graphic : String
+  skin : String,
+  speed : Int
 }
 
 @:expose class Spawn {
 
-  private static inline var WALL_GRAPHIC = "assets/images/game_wall.png";
+  public static inline var WALL_GRAPHIC = "assets/images/game_wall.png";
   private static inline var FREEZE_GRAPHIC = "assets/images/graphic-49.png";
   private static inline var SPEED_GRAPHIC = "assets/images/game_good.png";
   private static inline var SLOW_GRAPHIC = "assets/images/graphic-45.png";
-  private static inline var GEM_GRAPHIC = "assets/images/graphic-57.png";
-  private static inline var ENEMY_GRAPHIC = "assets/images/graphic-27.png";
 
   public static var hero_1_setting:HeroSetting;
   public static var hero_2_setting:HeroSetting;
@@ -61,32 +61,44 @@ typedef Enemy = {
 
   public static inline function wall(x:Int, y:Int):Void
   {
-    walls.add( { x : x, y : y, graphic : WALL_GRAPHIC } );
+    walls.add( { x : x, y : y, skin : Settings.wall.skin } );
   }
 
   public static inline function freeze(x:Int, y:Int):Void
   {
-    pickups.add( { type: FREEZE, x : x, y : y, graphic : FREEZE_GRAPHIC } );
+    pickups.add( { type: FREEZE, x : x, y : y, skin : FREEZE_GRAPHIC } );
   }
 
   public static inline function speed(x:Int, y:Int):Void
   {
-    pickups.add( { type: SPEED, x : x, y : y, graphic : SPEED_GRAPHIC } );
+    pickups.add( { type: SPEED, x : x, y : y, skin : SPEED_GRAPHIC } );
   }
 
   public static inline function slow(x:Int, y:Int):Void
   {
-    pickups.add( { type: SLOW, x : x, y : y, graphic : SLOW_GRAPHIC } );
+    pickups.add( { type: SLOW, x : x, y : y, skin : SLOW_GRAPHIC } );
   }
 
-  public static inline function gem(x:Int, y:Int):Void
+  public static inline function gem(x:Int, y:Int, ?points:Int, ?skin:String):Void
   {
-    pickups.add( { type: GEM, x : x, y : y, graphic : GEM_GRAPHIC } );
+    pickups.add({
+      type: GEM,
+      x : x,
+      y : y,
+      skin : skin != null ? skin : Settings.gem.default_skin,
+      points : points != null ? points : Settings.gem.default_points
+    });
   }
 
-  public static inline function enemy(x:Int, y:Int, ?direction:String):Void
+  public static inline function enemy(x:Int, y:Int, ?direction:String, ?speed:Int, ?skin:String):Void
   {
-    enemies.add( { direction: direction, x : x, y : y, graphic : ENEMY_GRAPHIC } );
+    enemies.add({
+      direction: direction,
+      x : x,
+      y : y,
+      skin : skin != null ? skin : Settings.enemy.default_skin,
+      speed : speed != null ? speed : Settings.enemy.default_speed
+    });
   }
 
 #if neko

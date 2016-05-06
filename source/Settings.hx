@@ -1,10 +1,13 @@
 package;
 
 import sprites.Player;
+import sprites.Enemy;
+import sprites.pickups.*;
 
 @:expose class Settings {
 
   public static var time_limit = 4; // seconds
+
   public static var hero_1 = {
     skin : Player.default_graphic,
     speed : Player.default_speed
@@ -13,5 +16,19 @@ import sprites.Player;
     skin : Player.default_graphic,
     speed : Player.default_speed
   };
+
+  public static var enemy = {
+    default_skin : Enemy.default_skin,
+    default_speed : Enemy.default_speed
+  }
+
+  public static var wall = {
+    skin : Spawn.WALL_GRAPHIC
+  }
+
+  public static var gem = {
+    default_skin : Gem.DEFAULT_SKIN,
+    default_points : Gem.DEFAULT_POINTS
+  }
 
 }
