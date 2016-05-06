@@ -106,6 +106,7 @@ class Player extends FlxSprite {
     }
 
     if(!moving_h) this.acceleration.x = 0;
+    else this.flipX = this.acceleration.x > 0;
     if(!moving_v) this.acceleration.y = 0;
 
 
