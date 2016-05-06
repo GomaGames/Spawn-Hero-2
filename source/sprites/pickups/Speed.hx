@@ -9,6 +9,8 @@ class Speed extends Pickup {
 
   public function new(x:Int, y:Int, graphic:String, ?duration:Float = DEFAULT_DURATION){
     super(x, y, graphic);
+    this.scale.set(.5,.5);
+    this.updateHitbox();
     if(duration != null){
       DURATION = duration;
     }

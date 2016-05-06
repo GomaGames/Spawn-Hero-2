@@ -47,6 +47,9 @@ class Player extends FlxSprite {
     settings = player_num == 1 ? Settings.hero_1 : Settings.hero_2;
     super(x, y, settings.skin);
 
+    this.scale.set(.5,.5);
+    this.updateHitbox();
+
     this.spawn_position = FlxPoint.weak(x, y);
     this.player_num = player_num;
     this.speed = settings.speed;

@@ -16,6 +16,8 @@ class Enemy extends FlxSprite {
   public function new(x:Int, y:Int, speed:Int, skin:String, ?direction:String ){
     this.speed = speed;
     super(x, y, skin);
+    this.scale.set(.5,.5);
+    this.updateHitbox();
     this.elasticity = 1;
     if(direction != null){
       switch(direction){

@@ -9,6 +9,8 @@ class Gem extends Pickup {
 
   public function new(x:Int, y:Int, graphic:String, points:Int){
     super(x, y, graphic);
+    this.scale.set(.5,.5);
+    this.updateHitbox();
     if(points != null){
       POINTS = points;
     }
