@@ -26,6 +26,8 @@ class PlayState extends FlxState
     map = new Map(this);
     map.makeGraphic( Main.STAGE_WIDTH, Main.STAGE_HEIGHT );
     Map.drawGridLines( this, map );
+    Map.drawTopBar( this, map );
+
     bgColor = flixel.util.FlxColor.WHITE;
     add(map);
  
