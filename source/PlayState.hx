@@ -34,7 +34,6 @@ class PlayState extends FlxState
     pickups = new List<Pickup>();
     enemies = new List<Enemy>();
     survival_type = true;
-
 		super.create();
     map = new Map(this);
     map.makeGraphic( Main.STAGE_WIDTH, Main.STAGE_HEIGHT, Main.BACKGROUND_GREY );
@@ -56,11 +55,11 @@ class PlayState extends FlxState
             ));
     });
 
-    p1score = new FlxText( 4 * ( Main.STAGE_WIDTH / Map.GRID_LINES_X ) , 10, Std.string(0));
+    p1score = new FlxText( 4 * ( Main.STAGE_WIDTH / Map.GRID_LINES_X ) , 10, '0');
     p1score.setFormat( AssetPaths.CHUNKY_FONT, 18, Main.FONT_RED, FlxTextAlign.LEFT, FlxTextBorderStyle.SHADOW, FlxColor.BLACK, true);
     add(p1score);
 
-    p2score = new FlxText( Main.STAGE_WIDTH - 2 * ( Main.STAGE_WIDTH / Map.GRID_LINES_X ) , 10, Std.string(0));
+    p2score = new FlxText( Main.STAGE_WIDTH - 2 * ( Main.STAGE_WIDTH / Map.GRID_LINES_X ) , 10, '0');
     p2score.setFormat( AssetPaths.CHUNKY_FONT, 18, Main.FONT_BLUE, FlxTextAlign.LEFT, FlxTextBorderStyle.SHADOW, FlxColor.BLACK, true);
     add(p2score);
 
