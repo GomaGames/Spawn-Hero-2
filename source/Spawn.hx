@@ -27,4 +27,12 @@ typedef Wall = {
 
   }
 
+#if neko
+  public static inline function dev():Void
+  {
+    wall( 120, 240 );
+    wall( 160, 200 );
+  }
+#end
+
 }

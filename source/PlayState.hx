@@ -39,7 +39,9 @@ class PlayState extends FlxState
     player_2 = new Player(this,2,100,100);
     add(player_2);
 
-    // Spawn.state = this;
+#if neko
+    Spawn.dev();
+#end
     spawnAll();
 	}
 
