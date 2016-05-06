@@ -31,7 +31,7 @@ class PlayState extends FlxState
     Map.drawGridLines( this, map );
     bgColor = flixel.util.FlxColor.WHITE;
     add(map);
- 
+
     player_1 = new Player(this,1,10,10);
     add(player_1);
 
@@ -58,6 +58,7 @@ class PlayState extends FlxState
       var new_pickup:Pickup = switch(pickup.type){
 
         case GEM: null;
+          new sprites.pickups.Gem(pickup.x, pickup.y, pickup.graphic);
 
         case FREEZE:
           new sprites.pickups.Freeze(pickup.x, pickup.y, pickup.graphic);
@@ -85,7 +86,13 @@ class PlayState extends FlxState
         if( FlxG.collide(hero, pickup) ){
           remove(pickup);
           pickups.remove(pickup);
-          hero.freeze(pickup.DURATION);
+          switch(Type.getClass(pickup)){
+            case sprites.pickups.Freeze:
+              hero.freeze(pickup.DURATION);
+            case sprites.pickups.Gem:
+              hero.score(pickup.POINTS);
+
+          }
         }
       }
 

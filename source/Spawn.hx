@@ -25,6 +25,7 @@ typedef PlacePickup = { > Placeable,
 
   private static inline var WALL_GRAPHIC = "assets/images/game_wall.png";
   private static inline var FREEZE_GRAPHIC = "assets/images/graphic-49.png";
+  private static inline var GEM_GRAPHIC = "assets/images/graphic-57.png";
 
   public static var state:PlayState;
   public static var pickups = new List<PlacePickup>();
@@ -42,7 +43,7 @@ typedef PlacePickup = { > Placeable,
 
   public static inline function gem(x:Int, y:Int):Void
   {
-    trace('spawning gem at $x $y');
+    pickups.add( { type: GEM, x : x, y : y, graphic : GEM_GRAPHIC } );
 
   }
 
@@ -52,6 +53,7 @@ typedef PlacePickup = { > Placeable,
     wall( 120, 240 );
     wall( 160, 200 );
     freeze( 200, 200 );
+    gem( 200, 100 );
   }
 #end
 

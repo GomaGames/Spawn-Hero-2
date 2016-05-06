@@ -32,6 +32,9 @@ class Player extends FlxSprite {
   private static inline var DIAGONAL_MOVEMENT = 1.41421356237;  // divide by sqrt(2)
   private static inline var default_graphic = "assets/images/graphic-07.png";
   private static inline var base_speed = 200;
+
+  public var points:Int;
+
   private var player_num:Int;
   private var graphic_path:String;
   private var attacking:Bool;
@@ -43,6 +46,7 @@ class Player extends FlxSprite {
     this.player_num = player_num;
     this.speed = base_speed;
     this.drag = FlxPoint.weak(this.speed*10, this.speed*10);
+    this.points = 0;
 
   }
 
@@ -104,6 +108,11 @@ class Player extends FlxSprite {
     new FlxTimer().start(duration, function(timer){
       this.speed = base_speed;
     });
+  }
+
+  public inline function score(points:Int):Void
+  {
+    this.points += points;
   }
 }
 
