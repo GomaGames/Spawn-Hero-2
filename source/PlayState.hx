@@ -34,6 +34,7 @@ class PlayState extends FlxState
     Map.drawGridLines( this, map );
     bgColor = flixel.util.FlxColor.WHITE;
     add(map);
+    add(flixel.util.FlxCollision.createCameraWall(FlxG.camera, true, 1));
 
 
 #if neko

@@ -100,8 +100,12 @@ typedef Enemy = {
     speed( 160, 100 );
     slow( 160, 300 );
     gem( 200, 100 );
-    enemy( 600, 500 );
-    enemy( 500, 450 );
+    enemy( 650, 500 , "down");
+    wall( 650, 600 );
+    enemy( 500, 550 , "right");
+    enemy( 600, 500 , "up");
+    enemy( 500, 450 , "left");
+    enemy( 400, 450 );
   }
 #end
 
