@@ -8,8 +8,8 @@ import flixel.text.FlxText;
 
 class Map extends FlxSprite {
   public static inline var GRID_SIZE:Int = 40;
-  public static inline var GRID_LINES_X:Int = 23;
-  public static inline var GRID_LINES_Y:Int = 15;
+  public static inline var GRID_LINES_X:Int = 24;
+  public static inline var GRID_LINES_Y:Int = 16;
   public static inline var TOP_BAR_BUFFER:Int = 40;
 
   public static var TOPBAR_GREY:FlxColor = FlxColor.fromString('#212121');
