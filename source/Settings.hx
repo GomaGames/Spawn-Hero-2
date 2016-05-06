@@ -41,4 +41,9 @@ import sprites.pickups.*;
     default_duration : Speed.DEFAULT_DURATION
   }
 
+  public static var slow = {
+    default_skin : Slow.DEFAULT_SKIN,
+    default_duration : Slow.DEFAULT_DURATION
+  }
+
 }

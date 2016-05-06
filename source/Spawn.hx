@@ -39,7 +39,6 @@ typedef Enemy = {
 @:expose class Spawn {
 
   public static inline var WALL_GRAPHIC = "assets/images/game_wall.png";
-  private static inline var SLOW_GRAPHIC = "assets/images/graphic-45.png";
 
   public static var hero_1_setting:HeroSetting;
   public static var hero_2_setting:HeroSetting;
@@ -86,9 +85,15 @@ typedef Enemy = {
   }
 
 
-  public static inline function slow(x:Int, y:Int):Void
+  public static inline function slow(x:Int, y:Int, ?duration:Int, ?skin:String):Void
   {
-    pickups.add( { type: SLOW, x : x, y : y, skin : SLOW_GRAPHIC } );
+    pickups.add({
+      type: SLOW,
+      x : x,
+      y : y,
+      skin : skin != null ? skin : Settings.slow.default_skin,
+      duration : duration != null ? duration : Settings.slow.default_duration
+    });
   }
 
   public static inline function gem(x:Int, y:Int, ?points:Int, ?skin:String):Void
