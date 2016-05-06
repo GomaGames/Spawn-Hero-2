@@ -5,8 +5,8 @@ import openfl.display.Sprite;
 
 class Main extends Sprite
 {
-  private static inline var STAGE_WIDTH = 920;
-  private static inline var STAGE_HEIGHT = 640;
+  public static inline var STAGE_WIDTH = 920;
+  public static inline var STAGE_HEIGHT = 640;
 
 	public function new()
 	{
