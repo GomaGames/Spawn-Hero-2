@@ -9,17 +9,17 @@ import sprites.pickups.*;
   public static var time_limit = 4; // seconds
 
   public static var hero_1 = {
-    skin : Player.default_graphic,
-    speed : Player.default_speed
+    skin : Player.DEFAULT_SKIN_1,
+    speed : Player.DEFAULT_SPEED
   };
   public static var hero_2 = {
-    skin : Player.default_graphic,
-    speed : Player.default_speed
+    skin : Player.DEFAULT_SKIN_1,
+    speed : Player.DEFAULT_SPEED
   };
 
   public static var enemy = {
-    default_skin : Enemy.default_skin,
-    default_speed : Enemy.default_speed
+    default_skin : Enemy.DEFAULT_SKIN,
+    default_speed : Enemy.DEFAULT_SPEED
   }
 
   public static var wall = {

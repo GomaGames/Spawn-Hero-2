@@ -5,8 +5,8 @@ using flixel.util.FlxSpriteUtil;
 
 class Enemy extends FlxSprite {
 
-  public static inline var default_skin = "assets/images/graphic-27.png";
-  public static inline var default_speed = 100;
+  public static inline var DEFAULT_SKIN = "assets/images/12.png";
+  public static inline var DEFAULT_SPEED = 100;
   public static inline var UP = "up";
   public static inline var DOWN = "down";
   public static inline var LEFT = "left";

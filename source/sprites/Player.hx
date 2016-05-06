@@ -30,8 +30,9 @@ class PlayerInput {
 class Player extends FlxSprite {
 
   private static inline var DIAGONAL_MOVEMENT = 1.41421356237;  // divide by sqrt(2)
-  public static inline var default_graphic = "assets/images/graphic-07.png";
-  public static inline var default_speed = 200;
+  public static inline var DEFAULT_SKIN_1 = "assets/images/01.png";
+  public static inline var DEFAULT_SKIN_2 = "assets/images/04.png";
+  public static inline var DEFAULT_SPEED = 200;
 
   public var points:Int;
 
