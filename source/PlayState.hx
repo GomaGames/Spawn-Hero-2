@@ -51,6 +51,20 @@ class PlayState extends FlxState
     }
 
     // pickups
+    for( pickup in Spawn.pickups ){
+      switch(pickup.type){
+
+        case GEM:
+
+        case FREEZE:
+          add( new sprites.pickups.Freeze(pickup.x, pickup.y, pickup.graphic) );
+
+        case SLOW:
+
+        case SPEED:
+
+      }
+    }
 
     // enemies
 
