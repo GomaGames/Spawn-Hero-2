@@ -19,7 +19,8 @@ typedef Wall = Placeable;
 
 typedef PlacePickup = { > Placeable,
   type : PickupType,
-  ?points : Int
+  ?points : Int,
+  ?duration : Int
 }
 
 typedef HeroSetting = {
@@ -38,7 +39,6 @@ typedef Enemy = {
 @:expose class Spawn {
 
   public static inline var WALL_GRAPHIC = "assets/images/game_wall.png";
-  private static inline var FREEZE_GRAPHIC = "assets/images/graphic-49.png";
   private static inline var SPEED_GRAPHIC = "assets/images/game_good.png";
   private static inline var SLOW_GRAPHIC = "assets/images/graphic-45.png";
 
@@ -64,9 +64,15 @@ typedef Enemy = {
     walls.add( { x : x, y : y, skin : Settings.wall.skin } );
   }
 
-  public static inline function freeze(x:Int, y:Int):Void
+  public static inline function freeze(x:Int, y:Int, ?duration:Int, ?skin:String):Void
   {
-    pickups.add( { type: FREEZE, x : x, y : y, skin : FREEZE_GRAPHIC } );
+    pickups.add({
+      type: FREEZE,
+      x : x,
+      y : y,
+      skin : skin != null ? skin : Settings.freeze.default_skin,
+      duration : duration != null ? duration : Settings.freeze.default_duration
+    });
   }
 
   public static inline function speed(x:Int, y:Int):Void

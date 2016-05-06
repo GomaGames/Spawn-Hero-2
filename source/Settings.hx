@@ -31,4 +31,9 @@ import sprites.pickups.*;
     default_points : Gem.DEFAULT_POINTS
   }
 
+  public static var freeze = {
+    default_skin : Freeze.DEFAULT_SKIN,
+    default_duration : Freeze.DEFAULT_DURATION
+  }
+
 }
