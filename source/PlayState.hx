@@ -63,7 +63,7 @@ class PlayState extends FlxState
   {
     // walls
     for( wall in Spawn.walls ){
-      var wall = new FlxSprite(wall.x, wall.y, wall.graphic);
+      var wall = new FlxSprite(wall.x, wall.y, wall.skin);
       wall.immovable = true;
       add( wall );
     }
@@ -74,16 +74,16 @@ class PlayState extends FlxState
 
         case GEM:
           survival_type = false;
-          new sprites.pickups.Gem(pickup.x, pickup.y, pickup.graphic);
+          new sprites.pickups.Gem(pickup.x, pickup.y, pickup.skin, pickup.points);
 
         case FREEZE:
-          new sprites.pickups.Freeze(pickup.x, pickup.y, pickup.graphic);
+          new sprites.pickups.Freeze(pickup.x, pickup.y, pickup.skin);
 
         case SLOW:
-          new sprites.pickups.Slow(pickup.x, pickup.y, pickup.graphic);
+          new sprites.pickups.Slow(pickup.x, pickup.y, pickup.skin);
 
         case SPEED:
-          new sprites.pickups.Speed(pickup.x, pickup.y, pickup.graphic);
+          new sprites.pickups.Speed(pickup.x, pickup.y, pickup.skin);
 
       }
 

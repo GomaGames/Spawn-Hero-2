@@ -2,6 +2,7 @@ package;
 
 import sprites.Player;
 import sprites.Enemy;
+import sprites.pickups.*;
 
 @:expose class Settings {
 
@@ -23,6 +24,11 @@ import sprites.Enemy;
 
   public static var wall = {
     skin : Spawn.WALL_GRAPHIC
+  }
+
+  public static var gem = {
+    default_skin : Gem.DEFAULT_SKIN,
+    default_points : Gem.DEFAULT_POINTS
   }
 
 }
