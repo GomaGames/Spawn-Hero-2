@@ -10,20 +10,20 @@ import flixel.util.FlxTimer;
 class PlayerInput {
   // map Int-> Player number
   public static var up:IntMap<FlxKey> = [
-    1 => FlxKey.UP,
-    2 => FlxKey.W
+    2 => FlxKey.UP,
+    1 => FlxKey.W
   ];
   public static var down:IntMap<FlxKey> = [
-    1 => FlxKey.DOWN,
-    2 => FlxKey.S
+    2 => FlxKey.DOWN,
+    1 => FlxKey.S
   ];
   public static var left:IntMap<FlxKey> = [
-    1 => FlxKey.LEFT,
-    2 => FlxKey.A
+    2 => FlxKey.LEFT,
+    1 => FlxKey.A
   ];
   public static var right:IntMap<FlxKey> = [
-    1 => FlxKey.RIGHT,
-    2 => FlxKey.D
+    2 => FlxKey.RIGHT,
+    1 => FlxKey.D
   ];
 }
 
