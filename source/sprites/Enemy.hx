@@ -31,6 +31,7 @@ class Enemy extends FlxSprite {
 
   public override function update(_:Float):Void
   {
+    this.flipX = this.velocity.x > 0;
     super.update(_);
   }
 
