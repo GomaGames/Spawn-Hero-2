@@ -42,6 +42,8 @@ class Player extends FlxSprite {
   private var speed:Int;
   private var spawn_position:FlxPoint;
   private var settings:{ skin:String, speed:Int };
+  private var walkRot:Float;
+  private var walkHopY:Float;
 
   public function new(state:PlayState, player_num:Int, x:Int, y:Int) {
     settings = player_num == 1 ? Settings.hero_1 : Settings.hero_2;
@@ -55,6 +57,8 @@ class Player extends FlxSprite {
     this.speed = settings.speed;
     this.drag = FlxPoint.weak(this.speed*10, this.speed*10);
     this.points = 0;
+    this.walkRot = 0;
+    this.walkHopY = 0;
   }
 
   override public function update(elapsed:Float):Void
@@ -91,6 +95,14 @@ class Player extends FlxSprite {
       // if (game.input.space){
       //   this.attack();
       // }
+    }
+
+    // funner walking
+    if(moving_h || moving_v){
+      this.angle = Math.cos(++this.walkRot)  * 10; // 100 tumbles
+      this.y += Math.sin(--this.walkHopY) * 3;
+    }else{
+      this.angle = 0;
     }
 
     if(!moving_h) this.acceleration.x = 0;
