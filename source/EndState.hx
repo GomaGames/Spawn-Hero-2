@@ -9,14 +9,38 @@ import flixel.math.FlxMath;
 import flixel.util.FlxColor;
 import flixel.util.FlxAxes;
 
+enum EndType {
+  TIME_OUT;
+  SURVIVED; // if there are no gems, timed out
+  FINISH; // if there are gems, all gems have been collected
+}
+
 class EndState extends FlxState
 {
   // TO BE REPLACED WITH ACTUAL SCORES
-  private static inline var MOCK_SCORE_1:Int = 12;
-  private static inline var MOCK_SCORE_2:Int = 32;
-  private inline function resolveWinner( player1score:Int, player2score:Int ):Int
+  private var p1Score:Int;
+  private var p2Score:Int;
+  private var end_type:EndType;
+
+  private inline function resolveWinner( p1Score:Int, p2Score:Int, ?end_type:EndType ):String
   {
-    return ( player1score > player2score )?1:2; 
+    if( p1Score == p2Score ) return "It's a tie!";
+    var winner = ( p1Score > p2Score )?1:2;
+    var text = switch( end_type ){
+      // TODO: VICTORY CONDITIONS 
+      case EndType.TIME_OUT: 'Hero ${winner} Wins!';
+      case EndType.SURVIVED: 'Hero ${winner} Survived!';
+      case EndType.FINISH: 'Hero ${winner} Wins!';
+      default: 'Hero ${winner} Wins!';
+    }
+    return text;
+  }
+
+  public function new(player_1_score:Int, player_2_score:Int, end_type:EndType){
+    super();
+    this.p1Score = player_1_score;
+    this.p2Score = player_2_score;
+    this.end_type = end_type;
   }
 
   override public function create():Void
@@ -25,12 +49,12 @@ class EndState extends FlxState
     bgColor = Main.BACKGROUND_GREY;
 
     var headerText = new FlxText( ( Main.STAGE_WIDTH / 8 ), ( Main.STAGE_HEIGHT / 10 ), 'GAME OVER' );
-    headerText.setFormat( AssetPaths.CHUNKY_FONT, 48, Main.FONT_GREY, FlxTextAlign.CENTER, FlxTextBorderStyle.SHADOW, FlxColor.BLACK, true);
+    headerText.setFormat( AssetPaths.CHUNKY_FONT, 42, Main.FONT_GREY, FlxTextAlign.CENTER, FlxTextBorderStyle.SHADOW, FlxColor.BLACK, true);
     headerText.screenCenter( FlxAxes.X );
     add( headerText );
 
-    var winnerText = new FlxText( Main.STAGE_WIDTH / 2, Main.STAGE_HEIGHT * (20/100), 'Hero ${resolveWinner(MOCK_SCORE_1,MOCK_SCORE_2)} Wins!' );
-    winnerText.setFormat( AssetPaths.CHUNKY_FONT, 88, Main.FONT_RED, FlxTextAlign.CENTER, FlxTextBorderStyle.SHADOW, FlxColor.BLACK, true);
+    var winnerText = new FlxText( Main.STAGE_WIDTH / 2, Main.STAGE_HEIGHT * (20/100), resolveWinner( this.p1Score, this.p2Score, this.end_type ));
+    winnerText.setFormat( AssetPaths.CHUNKY_FONT, 72, Main.FONT_RED, FlxTextAlign.CENTER, FlxTextBorderStyle.SHADOW, FlxColor.BLACK, true);
     winnerText.screenCenter( FlxAxes.X );
     add( winnerText );
 
@@ -46,11 +70,11 @@ class EndState extends FlxState
     player2Text.setFormat( AssetPaths.CHUNKY_FONT, 52, Main.FONT_GREY, FlxTextAlign.CENTER, FlxTextBorderStyle.SHADOW, FlxColor.BLACK, true);
     add( player2Text );
 
-    var player1Score = new FlxText( player1TextX + (player1TextX/10), playerTextY + (playerTextY/4), Std.string( MOCK_SCORE_1 ) );
+    var player1Score = new FlxText( player1TextX + 50, playerTextY + (playerTextY/4), Std.string( this.p1Score ) );
     player1Score.setFormat( AssetPaths.CHUNKY_FONT, 90, Main.FONT_RED, FlxTextAlign.CENTER, FlxTextBorderStyle.SHADOW, FlxColor.BLACK, true);
     add( player1Score );
 
-    var player2Score = new FlxText( player2TextX + (player2TextX/10), playerTextY + (playerTextY/4), Std.string( MOCK_SCORE_2 ) );
+    var player2Score = new FlxText( player2TextX + 50, playerTextY + (playerTextY/4), Std.string( this.p2Score ) );
     player2Score.setFormat( AssetPaths.CHUNKY_FONT, 88, Main.FONT_BLUE, FlxTextAlign.CENTER, FlxTextBorderStyle.SHADOW, FlxColor.BLACK, true);
     add( player2Score );
 

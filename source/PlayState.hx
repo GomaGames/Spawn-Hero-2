@@ -8,6 +8,7 @@ import flixel.ui.FlxButton;
 import flixel.math.FlxMath;
 import flixel.util.FlxSpriteUtil;
 import flixel.util.FlxColor;
+import flixel.util.FlxTimer;
 import sprites.Map;
 import sprites.Player;
 import sprites.Enemy;
@@ -21,12 +22,15 @@ class PlayState extends FlxState
   private var spawn_engine:Spawn;
   private var pickups:List<Pickup>;
   private var enemies:List<Enemy>;
+  private var timer:FlxTimer;
+  private var survival_type:Bool;
 
 
 	override public function create():Void
 	{
     pickups = new List<Pickup>();
     enemies = new List<Enemy>();
+    survival_type = true;
 
 		super.create();
     map = new Map(this);
@@ -38,6 +42,16 @@ class PlayState extends FlxState
     add(map);
     add(flixel.util.FlxCollision.createCameraWall(FlxG.camera, true, 1));
 
+    timer = new FlxTimer();
+    timer.start(Settings.time_limit, function(t){
+      FlxG.switchState(new EndState(
+            player_1.points,
+            player_2.points,
+            survival_type ?
+              EndState.EndType.SURVIVED :
+              EndState.EndType.TIME_OUT
+            ));
+    });
 
 #if neko
     Spawn.dev();
@@ -58,16 +72,17 @@ class PlayState extends FlxState
     for( pickup in Spawn.pickups ){
       var new_pickup:Pickup = switch(pickup.type){
 
-        case GEM: null;
+        case GEM:
+          survival_type = false;
           new sprites.pickups.Gem(pickup.x, pickup.y, pickup.graphic);
 
         case FREEZE:
           new sprites.pickups.Freeze(pickup.x, pickup.y, pickup.graphic);
 
-        case SLOW: null;
+        case SLOW:
           new sprites.pickups.Slow(pickup.x, pickup.y, pickup.graphic);
 
-        case SPEED: null;
+        case SPEED:
           new sprites.pickups.Speed(pickup.x, pickup.y, pickup.graphic);
 
       }
@@ -112,6 +127,7 @@ class PlayState extends FlxState
               hero.freeze(pickup.DURATION);
             case sprites.pickups.Gem:
               hero.score(pickup.POINTS);
+              victory_check();
           }
         }
       }
@@ -127,6 +143,15 @@ class PlayState extends FlxState
           hero.die();
         }
       }
+    }
+  }
+
+  private inline function victory_check():Void
+  {
+    if( Lambda.filter(pickups, function(p){
+      return Type.getClass(p) == sprites.pickups.Gem;
+    }).length == 0 ){
+      FlxG.switchState(new EndState(player_1.points, player_2.points, EndState.EndType.FINISH));
     }
   }
 
