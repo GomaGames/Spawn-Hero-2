@@ -4,6 +4,7 @@ import haxe.ds.IntMap;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.input.keyboard.FlxKey;
+import flixel.math.FlxPoint;
 
 class PlayerInput {
   // map Int-> Player number
@@ -26,7 +27,8 @@ class Player extends FlxSprite {
     super(x, y, default_graphic);
 
     this.player_num = player_num;
-    this.speed = 100;
+    this.speed = 200;
+    this.drag = FlxPoint.weak(this.speed*10, this.speed*10);
 
   }
 
@@ -38,31 +40,44 @@ class Player extends FlxSprite {
 
   private inline function movement():Void
   {
+    // this.velocity.set(0,0);
     var moving_h = false
       , moving_v = false;
 
     if(!this.attacking){
       if (FlxG.keys.anyPressed([PlayerInput.up.get(1)])){
         // this.acceleration.y = -GG.hero_speed;
-        this.acceleration.y = -this.speed;
+        this.acceleration.y = -this.speed *10;
         moving_v = true;
       }
       if (FlxG.keys.anyPressed([PlayerInput.down.get(1)])){
-        this.acceleration.y = this.speed;
+        this.acceleration.y = this.speed *10;
         moving_v = true;
       }
       if (FlxG.keys.anyPressed([PlayerInput.left.get(1)])){
         // this.acceleration.y = -GG.hero_speed;
-        this.acceleration.x = -this.speed;
+        this.acceleration.x = -this.speed *10;
         moving_h = true;
       }
       if (FlxG.keys.anyPressed([PlayerInput.right.get(1)])){
-        this.acceleration.x = this.speed;
+        this.acceleration.x = this.speed *10;
         moving_h = true;
       }
       // if (game.input.space){
       //   this.attack();
       // }
+    }
+
+    if(!moving_h) this.acceleration.x = 0;
+    if(!moving_v) this.acceleration.y = 0;
+
+
+    // orthagonal movement goes faster
+    this.maxVelocity = if(moving_h && moving_v){
+      FlxPoint.weak(this.speed/DIAGONAL_MOVEMENT, this.speed/DIAGONAL_MOVEMENT);
+    } else {
+      FlxPoint.weak(this.speed, this.speed);
+
     }
 
   }
