@@ -19,7 +19,8 @@ typedef Wall = Placeable;
 
 typedef PlacePickup = { > Placeable,
   type : PickupType,
-  ?points : Int
+  ?points : Int,
+  ?duration : Int
 }
 
 typedef HeroSetting = {
@@ -37,10 +38,7 @@ typedef Enemy = {
 
 @:expose class Spawn {
 
-  public static inline var WALL_GRAPHIC = "assets/images/game_wall.png";
-  private static inline var FREEZE_GRAPHIC = "assets/images/graphic-49.png";
-  private static inline var SPEED_GRAPHIC = "assets/images/game_good.png";
-  private static inline var SLOW_GRAPHIC = "assets/images/graphic-45.png";
+  public static inline var DEFAULT_WALL_SKIN = "assets/images/game_wall.png";
 
   public static var hero_1_setting:HeroSetting;
   public static var hero_2_setting:HeroSetting;
@@ -59,24 +57,47 @@ typedef Enemy = {
     hero_2_setting = { x : x, y : y };
   }
 
-  public static inline function wall(x:Int, y:Int):Void
+  public static inline function wall(x:Int, y:Int, ?skin:String):Void
   {
-    walls.add( { x : x, y : y, skin : Settings.wall.skin } );
+    walls.add({
+      x : x,
+      y : y,
+      skin : skin != null ? skin : Settings.wall.default_skin,
+    });
   }
 
-  public static inline function freeze(x:Int, y:Int):Void
+  public static inline function freeze(x:Int, y:Int, ?duration:Int, ?skin:String):Void
   {
-    pickups.add( { type: FREEZE, x : x, y : y, skin : FREEZE_GRAPHIC } );
+    pickups.add({
+      type: FREEZE,
+      x : x,
+      y : y,
+      skin : skin != null ? skin : Settings.freeze.default_skin,
+      duration : duration != null ? duration : Settings.freeze.default_duration
+    });
   }
 
-  public static inline function speed(x:Int, y:Int):Void
+  public static inline function speed(x:Int, y:Int, ?duration:Int, ?skin:String):Void
   {
-    pickups.add( { type: SPEED, x : x, y : y, skin : SPEED_GRAPHIC } );
+    pickups.add({
+      type: SPEED,
+      x : x,
+      y : y,
+      skin : skin != null ? skin : Settings.speed.default_skin,
+      duration : duration != null ? duration : Settings.speed.default_duration
+    });
   }
 
-  public static inline function slow(x:Int, y:Int):Void
+
+  public static inline function slow(x:Int, y:Int, ?duration:Int, ?skin:String):Void
   {
-    pickups.add( { type: SLOW, x : x, y : y, skin : SLOW_GRAPHIC } );
+    pickups.add({
+      type: SLOW,
+      x : x,
+      y : y,
+      skin : skin != null ? skin : Settings.slow.default_skin,
+      duration : duration != null ? duration : Settings.slow.default_duration
+    });
   }
 
   public static inline function gem(x:Int, y:Int, ?points:Int, ?skin:String):Void
