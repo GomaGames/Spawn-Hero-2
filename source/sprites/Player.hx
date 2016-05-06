@@ -38,8 +38,6 @@ class Player extends FlxSprite {
 
   private inline function movement():Void
   {
-    this.velocity.x = this.velocity.y = 0;
-    this.acceleration.x = this.acceleration.y = 0;
     var moving_h = false
       , moving_v = false;
 
@@ -65,16 +63,6 @@ class Player extends FlxSprite {
       // if (game.input.space){
       //   this.attack();
       // }
-    }
-
-
-    this.velocity.x = ((moving_h)? 0 : this.velocity.x) + this.acceleration.x;
-    this.velocity.y = ((moving_v)? 0 : this.velocity.y) + this.acceleration.y;
-
-    // orthagonal movement goes faster
-    if(moving_h && moving_v){
-      this.velocity.x /= DIAGONAL_MOVEMENT;
-      this.velocity.y /= DIAGONAL_MOVEMENT;
     }
 
   }
