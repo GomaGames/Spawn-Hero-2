@@ -10,6 +10,7 @@ import flixel.util.FlxSpriteUtil;
 import flixel.util.FlxColor;
 import sprites.Map;
 import sprites.Player;
+import sprites.pickups.Pickup;
 
 class PlayState extends FlxState
 {
@@ -17,10 +18,12 @@ class PlayState extends FlxState
   private var player_1:Player;
   private var player_2:Player;
   private var spawn_engine:Spawn;
+  private var pickups:List<Pickup>;
 
 
 	override public function create():Void
 	{
+    pickups = new List<Pickup>();
 
 		super.create();
     map = new Map(this);
@@ -41,7 +44,7 @@ class PlayState extends FlxState
     spawnAll();
 	}
 
-  public inline function spawnAll():Void
+  private inline function spawnAll():Void
   {
     // walls
     for( wall in Spawn.walls ){
@@ -52,18 +55,21 @@ class PlayState extends FlxState
 
     // pickups
     for( pickup in Spawn.pickups ){
-      switch(pickup.type){
+      var new_pickup:Pickup = switch(pickup.type){
 
-        case GEM:
+        case GEM: null;
 
         case FREEZE:
-          add( new sprites.pickups.Freeze(pickup.x, pickup.y, pickup.graphic) );
+          new sprites.pickups.Freeze(pickup.x, pickup.y, pickup.graphic);
 
-        case SLOW:
+        case SLOW: null;
 
-        case SPEED:
+        case SPEED: null;
 
       }
+
+      pickups.add(new_pickup);
+      add(new_pickup);
     }
 
     // enemies
@@ -72,9 +78,25 @@ class PlayState extends FlxState
 
   }
 
+  private inline function pickup_collision():Void
+  {
+    for( pickup in pickups ){
+      for( hero in [player_1,player_2] ){
+        if( FlxG.collide(hero, pickup) ){
+          remove(pickup);
+          pickups.remove(pickup);
+          hero.freeze(pickup.DURATION);
+        }
+      }
+
+    }
+  }
+
 	override public function update(elapsed:Float):Void
 	{
 		super.update(elapsed);
+
+    pickup_collision();
 
     FlxG.collide();
 	}

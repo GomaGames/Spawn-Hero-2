@@ -2,10 +2,15 @@ package sprites.pickups;
 
 import flixel.FlxSprite;
 
-class Freeze extends FlxSprite implements IPickup {
+class Freeze extends Pickup {
 
-  public function new(x:Int, y:Int, graphic:String){
+  public static inline var DEFAULT_DURATION = 2; // seconds
+
+  public function new(x:Int, y:Int, graphic:String, ?duration:Float = DEFAULT_DURATION){
     super(x, y, graphic);
+    if(duration != null){
+      DURATION = duration;
+    }
   }
 
 }

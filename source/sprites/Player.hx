@@ -5,6 +5,7 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.input.keyboard.FlxKey;
 import flixel.math.FlxPoint;
+import flixel.util.FlxTimer;
 
 class PlayerInput {
   // map Int-> Player number
@@ -30,6 +31,7 @@ class Player extends FlxSprite {
 
   private static inline var DIAGONAL_MOVEMENT = 1.41421356237;  // divide by sqrt(2)
   private static inline var default_graphic = "assets/images/graphic-07.png";
+  private static inline var base_speed = 200;
   private var player_num:Int;
   private var graphic_path:String;
   private var attacking:Bool;
@@ -39,7 +41,7 @@ class Player extends FlxSprite {
     super(x, y, default_graphic);
 
     this.player_num = player_num;
-    this.speed = 200;
+    this.speed = base_speed;
     this.drag = FlxPoint.weak(this.speed*10, this.speed*10);
 
   }
@@ -92,6 +94,16 @@ class Player extends FlxSprite {
 
     }
 
+  }
+
+  public inline function freeze(duration:Float):Void
+  {
+    this.velocity.set(0,0);
+    this.acceleration.set(0,0);
+    this.speed = 0;
+    new FlxTimer().start(duration, function(timer){
+      this.speed = base_speed;
+    });
   }
 }
 

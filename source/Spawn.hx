@@ -17,7 +17,7 @@ typedef Placeable = {
 
 typedef Wall = Placeable;
 
-typedef Pickup = { > Placeable,
+typedef PlacePickup = { > Placeable,
   type : PickupType
 }
 
@@ -27,7 +27,7 @@ typedef Pickup = { > Placeable,
   private static inline var FREEZE_GRAPHIC = "assets/images/graphic-49.png";
 
   public static var state:PlayState;
-  public static var pickups = new List<Pickup>();
+  public static var pickups = new List<PlacePickup>();
   public static var walls = new List<Wall>();
 
   public static inline function wall(x:Int, y:Int):Void
