@@ -123,23 +123,27 @@ typedef Enemy = {
   }
 
 #if neko
+  private static var diddev:Bool = false;
   public static inline function dev():Void
   {
-    hero_1( 0, 50 );
-    hero_2( 400, 50 );
-    wall( 120, 240 );
-    wall( 160, 200 );
-    freeze( 200, 200 );
-    speed( 160, 100 );
-    slow( 160, 300 );
-    gem( 200, 100 );
-    gem( 200, 400 );
-    enemy( 650, 500 , "down");
-    wall( 650, 600 );
-    enemy( 500, 550 , "right");
-    enemy( 600, 500 , "up");
-    enemy( 500, 450 , "left");
-    enemy( 400, 450 );
+    if( !diddev ){
+      hero_1( 0, 50 );
+      hero_2( 400, 50 );
+      wall( 120, 240 );
+      wall( 160, 200 );
+      freeze( 200, 200 );
+      speed( 160, 100 );
+      slow( 160, 300 );
+      gem( 200, 100 );
+      gem( 200, 400 );
+      enemy( 650, 500 , "down");
+      wall( 650, 600 );
+      enemy( 500, 550 , "right");
+      enemy( 600, 500 , "up");
+      enemy( 500, 450 , "left");
+      enemy( 400, 450 );
+      diddev = true;
+    }
   }
 #end
 

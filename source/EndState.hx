@@ -70,11 +70,11 @@ class EndState extends FlxState
     add( player2Text );
 
     var player1Score = new FlxText( player1TextX + 50, playerTextY + (playerTextY/4), Std.string( this.p1Score ) );
-    player1Score.setFormat( AssetPaths.CHUNKY_FONT, 90, Main.FONT_RED, FlxTextAlign.CENTER, FlxTextBorderStyle.SHADOW, FlxColor.BLACK, true);
+    player1Score.setFormat( AssetPaths.CHUNKY_FONT, 90, Main.FONT_BLUE, FlxTextAlign.CENTER, FlxTextBorderStyle.SHADOW, FlxColor.BLACK, true);
     add( player1Score );
 
     var player2Score = new FlxText( player2TextX + 50, playerTextY + (playerTextY/4), Std.string( this.p2Score ) );
-    player2Score.setFormat( AssetPaths.CHUNKY_FONT, 88, Main.FONT_BLUE, FlxTextAlign.CENTER, FlxTextBorderStyle.SHADOW, FlxColor.BLACK, true);
+    player2Score.setFormat( AssetPaths.CHUNKY_FONT, 88, Main.FONT_RED, FlxTextAlign.CENTER, FlxTextBorderStyle.SHADOW, FlxColor.BLACK, true);
     add( player2Score );
 
     var playAgain = new FlxText( 3*(Main.STAGE_WIDTH/5), Main.STAGE_HEIGHT * (3/4), "PLAY AGAIN?" );
@@ -84,9 +84,17 @@ class EndState extends FlxState
 
   }
 
+  override public function destroy():Void
+  {
+    p1Score = null;
+    p2Score = null;
+    end_type = null;
+    super.destroy();
+  }
   override public function update(elapsed:Float):Void
   {
     if( FlxG.keys.getIsDown().length > 0 ) FlxG.switchState( new MenuState() );
     super.update(elapsed);
   }
+
 }
