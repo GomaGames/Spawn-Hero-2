@@ -16,7 +16,7 @@ class Main extends Sprite
 	{
 		super();
     //                                skip splash -------------------------------V
-    // addChild(new FlxGame(STAGE_WIDTH, STAGE_HEIGHT, MenuState, null, null, null, true));
-		addChild(new FlxGame(STAGE_WIDTH, STAGE_HEIGHT, PlayState, null, null, null, true));
+    // addChild(new FlxGame(STAGE_WIDTH, STAGE_HEIGHT, EndState, null, null, null, true));
+		addChild(new FlxGame(STAGE_WIDTH, STAGE_HEIGHT, TitleState, null, null, null, true));
 	}
 }
