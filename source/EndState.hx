@@ -105,7 +105,9 @@ class EndState extends FlxState
   }
   override public function update(elapsed:Float):Void
   {
-    if( allow_continue && FlxG.keys.getIsDown().length > 0 ) FlxG.switchState( new MenuState() );
+    if( allow_continue &&
+      ( FlxG.keys.getIsDown().length > 0 || FlxG.mouse.pressed )
+      ) FlxG.switchState( new MenuState() );
     super.update(elapsed);
   }
 
