@@ -25,7 +25,7 @@ class EndState extends FlxState
   private var end_type:EndType;
   private var allow_continue:Bool; // don't allow rapid continue while holding buttons
   private var resolve_timer:FlxTimer; // don't allow rapid continue while holding buttons
-  private static inline var resolve_delay:Int = 5; // seconds
+  private static inline var resolve_delay:Int = 3; // seconds
 
   private inline function resolveWinner( p1Score:Int, p2Score:Int ):String
   {
