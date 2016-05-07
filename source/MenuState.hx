@@ -42,7 +42,9 @@ class MenuState extends FlxState
 
 	override public function update(elapsed:Float):Void
 	{
-    if( countdown_timer == null && FlxG.keys.getIsDown().length > 0 ){
+    if( countdown_timer == null &&
+      ( FlxG.keys.getIsDown().length > 0 || FlxG.mouse.pressed )
+      ){
       start_countdown();
     }
 
