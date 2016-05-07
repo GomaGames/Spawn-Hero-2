@@ -11,9 +11,6 @@ import flixel.util.FlxTimer;
 
 class MenuState extends FlxState
 {
-  private var continue_delay:Int = 1; // don't allow rapid continue while holding buttons
-  private var allow_continue:Bool; // don't allow rapid continue while holding buttons
-  private var continue_timer:FlxTimer; // don't allow rapid continue while holding buttons
   private var ready_text:FlxText; // don't allow rapid continue while holding buttons
   private var countdown_timer:FlxTimer;
   private var countdown_seconds:Int = 3;
@@ -29,15 +26,9 @@ class MenuState extends FlxState
     titleImage.screenCenter();
     add( titleImage );
 
-    continue_timer = new FlxTimer();
-    continue_timer.start(continue_delay, function(t){
-      allow_continue = true;
-
-      ready_text = new FlxText( 400, 600, Std.string( "READY?" ) );
-      ready_text.setFormat( "Arial", 30, Main.FONT_BLUE, FlxTextAlign.CENTER, FlxTextBorderStyle.SHADOW, FlxColor.BLACK, true);
-      add( ready_text );
-
-    });
+    ready_text = new FlxText( 400, 600, Std.string( "READY?" ) );
+    ready_text.setFormat( "Arial", 30, Main.FONT_BLUE, FlxTextAlign.CENTER, FlxTextBorderStyle.SHADOW, FlxColor.BLACK, true);
+    add( ready_text );
 
 	}
 
@@ -51,7 +42,7 @@ class MenuState extends FlxState
 
 	override public function update(elapsed:Float):Void
 	{
-    if( allow_continue && countdown_timer == null && FlxG.keys.getIsDown().length > 0 ){
+    if( countdown_timer == null && FlxG.keys.getIsDown().length > 0 ){
       start_countdown();
     }
 
